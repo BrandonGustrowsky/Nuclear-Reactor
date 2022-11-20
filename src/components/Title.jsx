@@ -1,12 +1,13 @@
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
-const Title = () => {
+const Title = (props) => {
+    const { text } = props
     return (
-        <>
-            <Paper elevation={3} style={{width: "400px", height: "400px"}} >
-                
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+            <Paper elevation={3} className="titleContainer" >
+                <Typography>{ text }</Typography>
             </Paper>
-        </>
+        </div>
         
     )
 }

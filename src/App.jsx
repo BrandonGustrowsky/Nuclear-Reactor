@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { createTheme } from '@mui/material/styles';
 import Dashboard from "./components/Dashboard"
-import reactLogo from './assets/react.svg'
 import './App.css'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-function App() {
+const App = () => {
 
   let theme = createTheme({
     palette: {
+      mode: "light",
       primary: {
         main: "#0B3954" //dark blue
       },
@@ -31,18 +31,28 @@ function App() {
     MuiPaper: {
       styleOverrides: {
         root: {
-          background: theme.palette.orange.main,
+          background: theme.palette.secondary.main,
         }
       }
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          background: theme.palette.primary.main,
+          color: theme.palette.white.main,
+        }
+      }
+    }
   }
 })
 
-console.log(theme.palette.secondary.main)
+// console.log(theme.palette.secondary.main)
 
   return (
     <>
-        <Dashboard />
+    <ThemeProvider theme={theme}>
+      <Dashboard />
+    </ThemeProvider>
     </>
 
   )
