@@ -1,5 +1,5 @@
 import Title from "./Title"
-import { Card, Typography } from '@mui/material';
+import { Card, Typography, Button } from '@mui/material';
 
 const Dashboard = () => {
     return (
@@ -16,6 +16,12 @@ const Dashboard = () => {
                 <div id="rightScreen">
                     <Typography style={{fontSize: "25px"}}>System Logs</Typography>
                 </div>
+            </section>
+            <section className="controlBoard">
+                <Button className="controlBoardBtnOrange">Emergency Shutdown</Button>
+                <Button className="controlBoardBtnBlue">Controlled Shutdown</Button>
+                <Button className="controlBoardBtnBlue">Enable/Disable Coolant</Button>
+                <Button className="controlBoardBtnOrange">RESET</Button>
             </section>
         </>
     )

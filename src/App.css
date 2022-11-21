@@ -5,6 +5,7 @@
     --neon: #E0FF4F;
     --white: #FEFFFE;
     --light-box-shadow: rgba(254, 255, 254, 0.3) 0px 0px 100px 50px;
+    --dark-box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
 }
 
 html, body {
@@ -54,6 +55,7 @@ div > .titleContainer > * {
     margin-left: -2%;
     box-shadow: var(--light-box-shadow);
     z-index: 0;
+    border-bottom: 2px solid black;
 }
 
 #centerScreen {
@@ -65,6 +67,7 @@ div > .titleContainer > * {
     flex-wrap: wrap;
     box-shadow: var(--light-box-shadow);
     z-index: 5;
+    border-bottom: 2px solid black;
     /* overflow: scroll; */
 }
 
@@ -80,4 +83,46 @@ div > .titleContainer > * {
     margin-right: -1%;
     box-shadow: var(--light-box-shadow);
     z-index: 0;
+    border-bottom: 2px solid black;
+}
+
+.controlBoard {
+    background: var(--neon);
+    height: 20vh;
+    padding: 80px 10px 10px 50px;
+    margin-top: -5vh;
+    display: grid;
+    grid-template-columns: repeat(2, 0.2fr);
+    gap: 50px;
+}
+
+
+.controlBoard > .controlBoardBtnBlue {
+    background: var(--dark-blue);
+    color: var(--white);
+    outline: 2px solid var(--white);
+    height: 30px;
+}
+
+.controlBoard > .controlBoardBtnBlue:hover {
+    background: var(--white);
+    color: var(--dark-blue);
+    outline: 2px solid var(--dark-blue);
+}
+
+.controlBoard > .controlBoardBtnOrange {
+    background: var(--orange);
+    color: var(--dark-blue);
+    outline: 2px solid var(--dark-blue);
+    height: 30px;
+}
+
+.controlBoard > .controlBoardBtnOrange:hover {
+    background: var(--dark-blue);
+    color: var(--orange);
+    outline: 2px solid var(--orange);
+}
+
+.controlBoard:nth-child(1) {
+    
 }
