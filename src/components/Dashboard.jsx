@@ -1,10 +1,21 @@
 import Title from "./Title"
-import { Card, Typography, Button } from '@mui/material';
+import { Card, Typography, Button, IconButton } from '@mui/material';
+// import ToggleOnOutlined from '@material-ui/icons/ToggleOnOutlined';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
+import { useState } from "react"
 
 const Dashboard = () => {
+    const [plantName, setPlantName] = useState("")
+
+    const updatePlantName = (event) => {
+        if (event.detail === 2) { //Check for double click
+            console.log("Double click!  ")
+        }
+    }
+
     return (
         <>
-            <Title text="Reactor Name" />
+            <Title text="Reactor Name" onClick={updatePlantName}/>
             {/* Main Screens */}
             <section className="panel">
                 <div id="leftScreen">
@@ -23,6 +34,10 @@ const Dashboard = () => {
                 <Button className="controlBoardBtnBlue">Enable/Disable Coolant</Button>
                 <Button className="controlBoardBtnOrange">RESET</Button>
             </section>
+            <div className="toggleButtons">
+                <IconButton className="toggleSwitch"><ToggleOnIcon className="toggleIcon" /></IconButton>
+                <IconButton className="toggleSwitch"><ToggleOnIcon className="toggleIcon"/></IconButton>
+            </div>
         </>
     )
 }

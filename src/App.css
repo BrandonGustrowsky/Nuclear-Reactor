@@ -47,7 +47,7 @@ div > .titleContainer > * {
 #leftScreen {
     background: var(--light-blue);
     transform: rotateX(-20deg) rotateY(20deg);
-    width: 47%;
+    width: 47vw;
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -60,8 +60,8 @@ div > .titleContainer > * {
 
 #centerScreen {
     background: var(--orange);
-    margin-top: -25px;
-    width: 47%;
+    margin-top: -1.7%;
+    width: 47vw;
     height: 375px;
     display: flex;
     flex-wrap: wrap;
@@ -75,7 +75,7 @@ div > .titleContainer > * {
 #rightScreen {
     transform: rotateX(-20deg) rotateY(-20deg);
     background: var(--light-blue);
-    width: 47%;
+    width: 47vw;
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -88,7 +88,7 @@ div > .titleContainer > * {
 
 .controlBoard {
     background: var(--neon);
-    height: 20vh;
+    height: max-content;
     padding: 80px 10px 10px 50px;
     margin-top: -5vh;
     display: grid;
@@ -102,6 +102,8 @@ div > .titleContainer > * {
     color: var(--white);
     outline: 2px solid var(--white);
     height: 30px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .controlBoard > .controlBoardBtnBlue:hover {
@@ -114,7 +116,11 @@ div > .titleContainer > * {
     background: var(--orange);
     color: var(--dark-blue);
     outline: 2px solid var(--dark-blue);
+    overflow: scroll;
     height: 30px;
+    /* font-size: 1vw; */
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .controlBoard > .controlBoardBtnOrange:hover {
@@ -123,6 +129,39 @@ div > .titleContainer > * {
     outline: 2px solid var(--orange);
 }
 
-.controlBoard:nth-child(1) {
-    
+.controlBoard *:nth-child(1) {
+    position: relative;
+    left: 100px;
+}
+
+.controlBoard *:nth-child(2) {
+    position: relative;
+    left: 125px;
+    bottom: 38px;
+}
+
+.controlBoard *:nth-child(3) {
+    position: relative;
+    left: 150px;
+    bottom: 10px;
+}
+
+.controlBoard *:nth-child(4) {
+    position: relative;
+    left: 200px;
+    bottom: 8px;
+}
+
+.toggleButtons {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    bottom: 70px;
+}
+
+.toggleSwitch > .toggleIcon {
+    transform: rotateZ(90deg);
+    width: 50px;
+    height: 50px;
+    color: var(--dark-blue);
 }
