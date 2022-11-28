@@ -7,15 +7,9 @@ import { useState } from "react"
 const Dashboard = () => {
     const [plantName, setPlantName] = useState("")
 
-    const updatePlantName = (event) => {
-        if (event.detail === 2) { //Check for double click
-            console.log("Double click!  ")
-        }
-    }
-
     return (
         <>
-            <Title text="Reactor Name" onClick={updatePlantName}/>
+            <Title text="Reactor Name"/>
             {/* Main Screens */}
             <section className="panel">
                 <div id="leftScreen">
