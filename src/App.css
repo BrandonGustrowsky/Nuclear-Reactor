@@ -128,7 +128,6 @@ div > .titleContainer > .titleInput {
     background: var(--orange);
     color: var(--dark-blue);
     outline: 2px solid var(--dark-blue);
-    overflow: scroll;
     height: 30px;
     /* font-size: 1vw; */
     text-overflow: ellipsis;
@@ -171,8 +170,8 @@ div > .titleContainer > .titleInput {
     bottom: 70px;
 }
 
-.toggleSwitch > .toggleIcon {
-    transform: rotateZ(90deg);
+.toggleSwitch {
+    transform: rotateZ(270deg);
     width: 50px;
     height: 50px;
     color: var(--dark-blue);

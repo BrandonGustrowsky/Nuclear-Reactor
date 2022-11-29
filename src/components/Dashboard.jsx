@@ -1,10 +1,11 @@
 import Title from "./Title"
-import { Card, Typography, Button, IconButton } from '@mui/material';
+import { Card, Typography, Button, IconButton, Switch } from '@mui/material';
 // import ToggleOnOutlined from '@material-ui/icons/ToggleOnOutlined';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import { useState } from "react"
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+    const { reactors } = props
     const [plantName, setPlantName] = useState("")
 
     return (
@@ -16,6 +17,10 @@ const Dashboard = () => {
                     <Typography style={{fontSize: "25px"}}>Average Temperature</Typography>
                 </div>
                 <div id="centerScreen">
+                    {console.log(reactors.length)}
+                    {reactors.length > 0 && reactors.map((reactor) => {
+                        return <div>{reactor.name}</div>
+                    })}
                     {/* <Typography style={{fontSize: "25px"}}>Average Temperature</Typography> */}
                 </div>
                 <div id="rightScreen">
@@ -29,8 +34,8 @@ const Dashboard = () => {
                 <Button className="controlBoardBtnOrange">RESET</Button>
             </section>
             <div className="toggleButtons">
-                <IconButton className="toggleSwitch"><ToggleOnIcon className="toggleIcon" /></IconButton>
-                <IconButton className="toggleSwitch"><ToggleOnIcon className="toggleIcon"/></IconButton>
+                <Switch className="toggleSwitch" />
+                <Switch className="toggleSwitch" />
             </div>
         </>
     )

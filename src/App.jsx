@@ -1,9 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Dashboard from "./components/Dashboard"
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const App = () => {
+  // API KEY: 21a518c670a84119
+  const apiKey = "21a518c670a84119"
+  const defaultReactorObject = {"reactors": [], "plant_name": "Nuclear Plant"}
+
+  const [reactors, setReactors] = useState(defaultReactorObject)
+  const [plantName, setPlantName] = useState("Plant Name")
+  const [isLoading, setIsLoading] = useState(false)
 
   let theme = createTheme({
     palette: {
@@ -46,12 +53,23 @@ const App = () => {
   }
 })
 
-// console.log(theme.palette.secondary.main)
+useEffect(() => {
+  (async () => {
+    setIsLoading(true)
+    const rawReactors = await fetch("https://nuclear.dacoder.io/reactors?apiKey=" + apiKey)
+    const jsonReactors = await rawReactors.json()
+    console.log(jsonReactors)
+    setReactors(jsonReactors.reactors)
+    setPlantName(jsonReactors.plant_name)
+    setIsLoading(false)
+  })()
+}, [])
 
   return (
     <>
+    {console.log(reactors)}
     <ThemeProvider theme={theme}>
-      <Dashboard />
+      <Dashboard reactors={reactors}/>
     </ThemeProvider>
     </>
 
