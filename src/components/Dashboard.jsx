@@ -5,7 +5,7 @@ import { useState } from "react"
 
 const Dashboard = (props) => {
     const { reactors, apiKey } = props
-    const [plantName, setPlantName] = useState("")
+    const [plantName, setPlantName] = useState({})
 
     return (
         <>
@@ -16,7 +16,6 @@ const Dashboard = (props) => {
                     <Typography style={{fontSize: "25px"}}>Average Temperature</Typography>
                 </div>
                 <div id="centerScreen">
-                    {console.log(reactors.length)}
                     {reactors.length > 0 && reactors.map((reactor, index) => {
                         return <ReactorTile key={index} reactor={reactor} apiKey={apiKey}/>
                     })}
