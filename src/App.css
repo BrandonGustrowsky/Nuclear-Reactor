@@ -72,15 +72,32 @@ div > .titleContainer > .titleInput {
 
 #centerScreen {
     background: var(--orange);
+    padding-top: 8px;
     margin-top: -1.7%;
     width: 47vw;
-    height: 375px;
+    height: 367px;
     display: flex;
     flex-wrap: wrap;
     box-shadow: var(--light-box-shadow);
     z-index: 5;
     border-bottom: 2px solid black;
-    /* overflow: scroll; */
+    justify-content: center;
+    gap: 3%;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+/* For Chrome, Safari, and Opera https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp#:~:text=Learn%20how%20to%20hide%20scrollbars%20with%20CSS.%20Add,will%20also%20remove%20the%20functionality%20of%20the%20scrollbar. */
+#centerScreen::-webkit-scrollbar { 
+    display: none;
+}
+
+#centerScreen > * { 
+    width: 45%;
+    height: 45%;
+    background: var(--dark-blue);
+    color: var(--white);
+    padding: 5px;
 }
 
 

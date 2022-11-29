@@ -56,9 +56,10 @@ const App = () => {
 useEffect(() => {
   (async () => {
     setIsLoading(true)
+    // Reactors
     const rawReactors = await fetch("https://nuclear.dacoder.io/reactors?apiKey=" + apiKey)
     const jsonReactors = await rawReactors.json()
-    console.log(jsonReactors)
+
     setReactors(jsonReactors.reactors)
     setPlantName(jsonReactors.plant_name)
     setIsLoading(false)
@@ -69,7 +70,7 @@ useEffect(() => {
     <>
     {console.log(reactors)}
     <ThemeProvider theme={theme}>
-      <Dashboard reactors={reactors}/>
+      <Dashboard reactors={reactors} apiKey={apiKey}/>
     </ThemeProvider>
     </>
 
