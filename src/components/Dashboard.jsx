@@ -4,18 +4,18 @@ import { Typography, Button, Switch, Grid } from '@mui/material';
 import { useState } from "react"
 
 const Dashboard = (props) => {
-    const { reactors, apiKey, plantName } = props
+    const { data, apiKey, setData } = props
     // console.log(reactors)
     return (
         <>
-            <Title text={plantName}/>
+            <Title text={data.plant_name}/>
             {/* Main Screens */}
             <section className="panel">
                 <div id="leftScreen">
                     <Typography style={{fontSize: "25px"}}>Average Temperature</Typography>
                 </div>
                 <div id="centerScreen">
-                    {reactors.length > 0 && reactors.map((reactor, index) => {
+                    {data.reactors.length > 0 && data.reactors.map((reactor, index) => {
                         // console.log(reactor)
                         return <ReactorTile key={index} reactor={reactor} apiKey={apiKey}/>
                     })}
