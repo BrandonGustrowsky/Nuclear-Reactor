@@ -84,7 +84,7 @@ const App = () => {
         const refuel = await fetch(BASE_URL + "/refuel/" + reactor.id + "" + apiKeyLink, {
           method: "POST",
         })
-        const setStateOnline = await fetch(BASE_URL + "/start-reactor/" + reactor.id + "" + apiKeyLink, {
+        const startReactor = await fetch(BASE_URL + "/start-reactor/" + reactor.id + "" + apiKeyLink, {
           method: "POST",
         })
         //Rod State
