@@ -78,15 +78,6 @@ const App = () => {
         const rawState = await fetch(BASE_URL + "/reactor-state/" + reactor.id + "" + apiKeyLink)
         const jsonState = await rawState.json()
         // jsonState.state = "Online"
-        const maintenance = await fetch(BASE_URL + "/maintenance/" + reactor.id + "" + apiKeyLink, {
-          method: "POST",
-        })
-        const refuel = await fetch(BASE_URL + "/refuel/" + reactor.id + "" + apiKeyLink, {
-          method: "POST",
-        })
-        const startReactor = await fetch(BASE_URL + "/start-reactor/" + reactor.id + "" + apiKeyLink, {
-          method: "POST",
-        })
         //Rod State
         const rawRodState = await fetch(BASE_URL + "/rod-state/" + reactor.id + "" + apiKeyLink)
         const jsonRodState = await rawRodState.json()
@@ -102,14 +93,14 @@ const App = () => {
           rodState: jsonRodState
         }
       })).then(reactors => setData({"plant_name" : jsonReactors.plant_name, "reactors" : reactors}))
-      console.log(data.reactors)
+      // console.log(data.reactors)
       
       // setReactors(modifiedReactors) gives a 'fulfilled' Promise even though I'm already running Promise.all()?
     }
     setIsLoading(false)
   }
   useEffect(() => {
-    const id = setInterval(getData, 250) //On mount
+    const id = setInterval(getData, 1000) //On mount
     return () => {clearInterval(id)}  //On component dismount
   }, [])
 
@@ -117,7 +108,7 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         {/* Get the plant naming function through as a prop */}
-        <Dashboard data={data} apiKey={apiKey} plantName={data.plant_name} setData={setData} /> 
+        <Dashboard data={data} url={{BASE_URL : BASE_URL, apiKeyLink: apiKeyLink}} setData={setData} /> 
       </ThemeProvider>
     </>
 

@@ -180,6 +180,12 @@ div > .titleContainer > .titleInput {
     bottom: 8px;
 }
 
+.controlBoard *:nth-child(5) {
+    position: relative;
+    left: 400%;
+    bottom: 100px;
+}
+
 .toggleButtons {
     display: flex;
     justify-content: space-between;

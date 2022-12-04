@@ -4,8 +4,23 @@ import { Typography, Button, Switch, Grid } from '@mui/material';
 import { useState } from "react"
 
 const Dashboard = (props) => {
-    const { data, apiKey, setData } = props
-    // console.log(reactors)
+    const { data, url, setData } = props
+    // console.log(data.reactors)
+
+    const startReactors = () => {
+        setData(data.reactors.map( async(reactor) => {
+            const maintenance = await fetch(url.BASE_URL + "/maintenance/" + reactor.id + "" + url.apiKeyLink, {
+                method: "POST",
+              })
+              const refuel = await fetch(url.BASE_URL + "/refuel/" + reactor.id + "" + url.apiKeyLink, {
+                method: "POST",
+              })
+              const startReactor = await fetch(url.BASE_URL + "/start-reactor/" + reactor.id + "" + url.apiKeyLink, {
+                method: "POST",
+              })
+              return reactor
+        }))
+    }
     return (
         <>
             <Title text={data.plant_name}/>
@@ -15,9 +30,11 @@ const Dashboard = (props) => {
                     <Typography style={{fontSize: "25px"}}>Average Temperature</Typography>
                 </div>
                 <div id="centerScreen">
-                    {data.reactors.length > 0 && data.reactors.map((reactor, index) => {
+                    {/* {console.log(data)} */}
+                    {/* {console.log(data.reactors)} */}
+                    {data.reactors && data.reactors.map((reactor, index) => {
                         // console.log(reactor)
-                        return <ReactorTile key={index} reactor={reactor} apiKey={apiKey}/>
+                        return <ReactorTile key={index} reactor={reactor} url={url}/>
                     })}
                 </div>
                 <div id="rightScreen">
@@ -29,6 +46,7 @@ const Dashboard = (props) => {
                 <Button className="controlBoardBtnBlue">Controlled Shutdown</Button>
                 <Button className="controlBoardBtnBlue">Enable/Disable Coolant</Button>
                 <Button className="controlBoardBtnOrange">RESET</Button>
+                <Button className="controlBoardBtnBlue" onClick={startReactors}>Start Reactors</Button>
             </section>
             <div className="toggleButtons">
                 <Switch className="toggleSwitch" />
