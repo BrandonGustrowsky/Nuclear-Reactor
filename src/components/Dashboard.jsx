@@ -23,7 +23,7 @@ const Dashboard = (props) => {
     }
     return (
         <>
-            <Title text={data.plant_name}/>
+            <Title text={data.plant_name} url={url} plantName={data.plant_name} setData={setData}/>
             {/* Main Screens */}
             <section className="panel">
                 <div id="leftScreen">

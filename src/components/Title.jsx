@@ -2,40 +2,46 @@ import { Button, TextField } from '@mui/material';
 import { useState } from "react"
 
 const Title = (props) => {
-    const [isEditing, setIsEditing] = useState(false)
-    const [value, setValue] = useState("Reactor Name")
-    const { text } = props
-    const BASE_URL = "https://nuclear.dacoder.io/reactors"
-    const apiKey = "21a518c670a84119"
-    const apiKeyLink = "?apiKey=" + apiKey
+    const { text, url, plantName, setData } = props
 
-    const updateTitle = async (event) => {
+    const [currPlantName, setCurrPlantName] = useState(plantName)
+    const [isEditing, setIsEditing] = useState(false)
+
+    const sendData = async (event) => {
         const { value } = event.target
+        console.log(value)
+        setIsEditing(false)
+        try {
+            const response = await fetch(url.BASE_URL + "/plant-name" + url.apiKeyLink, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': "application/json",
+                    'Accept': "application/json",
+                },
+                body: JSON.stringify({
+                    name: `${value}`
+                })
+            })
+            console.log(response)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const updateTitle = (event) => {
         setIsEditing(true)
-        const postTitle = await fetch(BASE_URL + "/plant-name/" + apiKeyLink, {
-            method: "PUT",
-            body: JSON.stringify({
-                title : value
-            })
-        }).then((response) => {
-            response.json().then((response) => {
-              console.log(response);
-            })
-          }).catch(err => {
-            console.error(err)
-          })
-        
     }
 
     return (
-        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div className="titleContainer">
-                {isEditing ? 
-                    <TextField autoFocus className="titleInput" variant="filled" value={value} 
-                        onChange={(event) => {setValue(event.target.value)}} onBlur={() => {setIsEditing(false)}} 
-                        onKeyDown={(event) => {event.keyCode === 13 ? setIsEditing(false) : null}}/>
+                {isEditing ?
+                    <TextField autoFocus className="titleInput" variant="filled" value={ isEditing ? currPlantName : plantName}
+                        // onChange={(event) => { setData((prevData) => ({...prevData, "plant_name" : event.target.value})) }} onBlur={() => { setIsEditing(false) }}
+                        onChange={(event) => { setCurrPlantName(event.target.value)}} onBlur={(event) => { sendData(event) }}
+                        onKeyDown={(event) => { event.key === "Enter" ? sendData(event) : null }} />
                     :
-                    <Button variant="text" onDoubleClick={(event) => { updateTitle(event) }} className="titleReadOnly">{ value }</Button>
+                    <Button variant="text" onDoubleClick={(event) => { updateTitle(event) }} className="titleReadOnly">{plantName}</Button>
                 }
             </div>
         </div>
