@@ -1,11 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import { Reactor } from "./routes/Reactor"
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Reactor from "./routes/Reactor"
+import Dashboard from "./routes/Dashboard"
 import App from './App'
 import './index.css'
 
 const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <App />,
+    },
     {
       path: "/reactor/:id",
       element: <Reactor />,

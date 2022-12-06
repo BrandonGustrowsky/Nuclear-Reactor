@@ -38,7 +38,7 @@ const Dashboard = (props) => {
                     {/* {console.log(data.reactors)} */}
                     {data.reactors && data.reactors.map((reactor, index) => {
                         // console.log(reactor)
-                        return <Link to={`reactors/${reactor.id}${url.apiKeyLink}`}><ReactorTile key={index} reactor={reactor} url={url}/></Link>
+                        return <ReactorTile key={index} reactor={reactor} url={url}/>
                     })}
                 </div>
                 <div id="rightScreen">

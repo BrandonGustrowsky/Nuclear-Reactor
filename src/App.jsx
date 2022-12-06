@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import Dashboard from "./routes/Dashboard"
 import './App.css'
-import { BrowserRouter as Router } from "react-router-dom"
+// import { BrowserRouter as Router } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+
 
 const App = () => {
   // API KEY: 21a518c670a84119
@@ -13,6 +14,7 @@ const App = () => {
 
   const [data, setData] = useState(defaultReactorObject)
   const [isLoading, setIsLoading] = useState(false)
+
 
   let theme = createTheme({
     palette: {
@@ -66,32 +68,32 @@ const App = () => {
         // Temperature
         const rawTemp = await fetch(BASE_URL + "/temperature/" + reactor.id + "" + apiKeyLink)
         const jsonTemp = await rawTemp.json()
-        //Coolant
-        const rawCoolant = await fetch(BASE_URL + "/coolant/" + reactor.id + "" + apiKeyLink)
-        const jsonCoolant = await rawCoolant.json()
-        //Output
-        const rawOutput = await fetch(BASE_URL + "/output/" + reactor.id + "" + apiKeyLink)
-        const jsonOutput = await rawOutput.json()
-        //Fuel level
-        const rawFuelLevel = await fetch(BASE_URL + "/fuel-level/" + reactor.id + "" + apiKeyLink)
-        const jsonFuelLevel = await rawFuelLevel.json()
-        //Reactor State
-        const rawState = await fetch(BASE_URL + "/reactor-state/" + reactor.id + "" + apiKeyLink)
-        const jsonState = await rawState.json()
-        // jsonState.state = "Online"
-        //Rod State
-        const rawRodState = await fetch(BASE_URL + "/rod-state/" + reactor.id + "" + apiKeyLink)
-        const jsonRodState = await rawRodState.json()
+        // //Coolant
+        // const rawCoolant = await fetch(BASE_URL + "/coolant/" + reactor.id + "" + apiKeyLink)
+        // const jsonCoolant = await rawCoolant.json()
+        // //Output
+        // const rawOutput = await fetch(BASE_URL + "/output/" + reactor.id + "" + apiKeyLink)
+        // const jsonOutput = await rawOutput.json()
+        // //Fuel level
+        // const rawFuelLevel = await fetch(BASE_URL + "/fuel-level/" + reactor.id + "" + apiKeyLink)
+        // const jsonFuelLevel = await rawFuelLevel.json()
+        // //Reactor State
+        // const rawState = await fetch(BASE_URL + "/reactor-state/" + reactor.id + "" + apiKeyLink)
+        // const jsonState = await rawState.json()
+        // // jsonState.state = "Online"
+        // //Rod State
+        // const rawRodState = await fetch(BASE_URL + "/rod-state/" + reactor.id + "" + apiKeyLink)
+        // const jsonRodState = await rawRodState.json()
         return {
           ...reactor,
           tempAmount: jsonTemp.temperature.amount,
           tempUnit: jsonTemp.temperature.unit,
           tempStatus: jsonTemp.temperature.status,
-          coolantStatus: jsonCoolant.coolant,
-          output: jsonOutput.output,
-          fuelLevel: jsonFuelLevel.fuel,
-          reactorState: jsonState,
-          rodState: jsonRodState
+          // coolantStatus: jsonCoolant.coolant,
+          // output: jsonOutput.output,
+          // fuelLevel: jsonFuelLevel.fuel,
+          // reactorState: jsonState,
+          // rodState: jsonRodState
         }
       })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
       // console.log(data.reactors)
@@ -107,12 +109,10 @@ const App = () => {
 
   return (
     <>
-      <Router>
-        <ThemeProvider theme={theme}>
-          {/* Get the plant naming function through as a prop */}
-          <Dashboard data={data} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} />
-        </ThemeProvider>
-      </Router>
+      <ThemeProvider theme={theme}>
+        {/* Get the plant naming function through as a prop */}
+        <Dashboard data={data} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} />
+      </ThemeProvider>
 
     </>
 
