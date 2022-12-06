@@ -1,11 +1,15 @@
-import Title from "./Title"
-import ReactorTile from "./ReactorTile"
-import { Typography, Button, Switch, Grid } from '@mui/material';
+import Title from "../components/Title"
+import ReactorTile from "../components/ReactorTile"
+import { Typography, Button, Switch } from '@mui/material';
+import {
+    Routes,
+    Route,
+    Link
+} from 'react-router-dom';
 import { useState } from "react"
 
 const Dashboard = (props) => {
     const { data, url, setData } = props
-    // console.log(data.reactors)
 
     const startReactors = () => {
         setData(data.reactors.map( async(reactor) => {
@@ -34,7 +38,7 @@ const Dashboard = (props) => {
                     {/* {console.log(data.reactors)} */}
                     {data.reactors && data.reactors.map((reactor, index) => {
                         // console.log(reactor)
-                        return <ReactorTile key={index} reactor={reactor} url={url}/>
+                        return <Link to={`reactors/${reactor.id}${url.apiKeyLink}`}><ReactorTile key={index} reactor={reactor} url={url}/></Link>
                     })}
                 </div>
                 <div id="rightScreen">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import Dashboard from "./components/Dashboard"
+import Dashboard from "./routes/Dashboard"
 import './App.css'
+import { BrowserRouter as Router } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const App = () => {
@@ -61,7 +62,7 @@ const App = () => {
     const jsonReactors = await rawReactors.json()
     // console.log(jsonReactors.reactors[0])
     if (jsonReactors.reactors.length > 0) {
-      const modifiedReactors = Promise.all(jsonReactors.reactors.map( async (reactor) => {
+      const modifiedReactors = Promise.all(jsonReactors.reactors.map(async (reactor) => {
         // Temperature
         const rawTemp = await fetch(BASE_URL + "/temperature/" + reactor.id + "" + apiKeyLink)
         const jsonTemp = await rawTemp.json()
@@ -92,24 +93,27 @@ const App = () => {
           reactorState: jsonState,
           rodState: jsonRodState
         }
-      })).then(reactors => setData({"plant_name" : jsonReactors.plant_name, "reactors" : reactors}))
+      })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
       // console.log(data.reactors)
-      
+
       // setReactors(modifiedReactors) gives a 'fulfilled' Promise even though I'm already running Promise.all()?
     }
     setIsLoading(false)
   }
   useEffect(() => {
     const id = setInterval(getData, 1000) //On mount
-    return () => {clearInterval(id)}  //On component dismount
+    return () => { clearInterval(id) }  //On component dismount
   }, [])
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        {/* Get the plant naming function through as a prop */}
-        <Dashboard data={data} url={{BASE_URL : BASE_URL, apiKeyLink: apiKeyLink}} setData={setData} /> 
-      </ThemeProvider>
+      <Router>
+        <ThemeProvider theme={theme}>
+          {/* Get the plant naming function through as a prop */}
+          <Dashboard data={data} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} />
+        </ThemeProvider>
+      </Router>
+
     </>
 
   )
