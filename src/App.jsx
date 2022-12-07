@@ -11,9 +11,11 @@ const App = () => {
   const apiKey = "21a518c670a84119"
   const apiKeyLink = "?apiKey=" + apiKey
   const defaultReactorObject = { "reactors": [], "plant_name": "Nuclear Plant" }
+  const defaultLogObject = { dynamic_id : []}
 
   const [data, setData] = useState(defaultReactorObject)
   const [isLoading, setIsLoading] = useState(false)
+  const [logs, setLogs] = useState(defaultLogObject)
 
 
   let theme = createTheme({
@@ -76,6 +78,10 @@ const App = () => {
       })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
 
     }
+    // Get log data
+    const rawLogs = await fetch(BASE_URL + "/logs" + apiKeyLink)
+    const jsonLogs = await rawLogs.json()
+    setLogs(jsonLogs)
     setIsLoading(false)
   }
   useEffect(() => {
@@ -87,7 +93,7 @@ const App = () => {
     <>  
       <ThemeProvider theme={theme}>
         {/* Get the plant naming function through as a prop */}
-        <Dashboard data={data} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} />
+        <Dashboard data={data} logs={logs} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} />
       </ThemeProvider>
 
     </>

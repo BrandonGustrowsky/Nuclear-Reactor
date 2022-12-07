@@ -9,9 +9,11 @@ import {
 import { useState } from "react"
 
 const Dashboard = (props) => {
-    const { data, url, setData } = props
+    const { data, logs, url, setData } = props
     const [leftToggle, setLeftToggle] = useState(false)
     const [rightToggle, setRightToggle] = useState(false)
+
+    console.log(logs)
 
     const activateControlledShutdown = () => {
 
@@ -47,7 +49,7 @@ const Dashboard = (props) => {
             const reset = await fetch(BASE_URL + "/reset" + apiKeyLink)
         }
     }
-    
+
     return (
         <>
             <Title text={data.plant_name} url={url} plantName={data.plant_name} setData={setData} />
@@ -65,6 +67,11 @@ const Dashboard = (props) => {
                 </Paper>
                 <Paper elevation={5}>
                     <Typography style={{ fontSize: "25px" }}>System Logs</Typography>
+                    <Paper id="logsContainer">
+                        {logs.length > 0 && logs.map((log, index) => {
+                            return <p key={index}>{log.dynamic_id}</p>
+                        })}
+                    </Paper>
                 </Paper>
             </section>
             <section className="controlBoard">
