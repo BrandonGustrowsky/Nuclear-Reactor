@@ -84,7 +84,7 @@ const App = () => {
   }, [])
 
   return (
-    <>
+    <>  
       <ThemeProvider theme={theme}>
         {/* Get the plant naming function through as a prop */}
         <Dashboard data={data} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} />
