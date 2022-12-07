@@ -12,7 +12,7 @@ const Dashboard = (props) => {
     const { data, url, setData } = props
 
     const startReactors = () => {
-        setData(data.reactors.map(async (reactor) => {
+        data.reactors.map(async (reactor) => {
             const maintenance = await fetch(url.BASE_URL + "/maintenance/" + reactor.id + "" + url.apiKeyLink, {
                 method: "POST",
                 headers: {
@@ -35,20 +35,20 @@ const Dashboard = (props) => {
                 },
             })
             return reactor
-        }))
+        })
     }
 
     const activateControlledShutdown = () => {
-        setData(data.reactors.map(async (reactor) => {
+        data.reactors.map(async (reactor) => {
             const shutdown = await fetch(url.BASE_URL + "/controlled-shutdown/" + reactor.id + "" + url.apiKeyLink,  {
                 method: "POST",
             })
             return reactor
-        }))
+        })
     }
 
     const activateEmergencyShutdown = () => {
-        setData(data.reactors.map(async (reactor) => {
+        data.reactors.map(async (reactor) => {
             const shutdown = await fetch(url.BASE_URL + "/emergency-shutdown/" + reactor.id + "" + url.apiKeyLink, {
                 method: "POST",
                 headers: {
@@ -57,13 +57,17 @@ const Dashboard = (props) => {
                 },
             })
             return reactor
-        }))
+        })
     }
 
     const toggleCoolantActivation = () => {
-        setData(data.reactors.map(() => {
+        data.reactors.map(() => {
             const toggleCoolant = fetch(url.BASE_URL + "/")
-        }))
+        })
+    }
+
+    const activateReset = async () => {
+        const reset = fetch(BASE_URL + "/reset" + apiKeyLink)
     }
 
     return (
@@ -78,10 +82,7 @@ const Dashboard = (props) => {
                     </div>
                 </div>
                 <div id="centerScreen">
-                    {/* {console.log(data)} */}
-                    {/* {console.log(data.reactors)} */}
                     {data.reactors && data.reactors.map((reactor, index) => {
-                        // console.log(reactor)
                         return <ReactorTile key={index} reactor={reactor} url={url} />
                     })}
                 </div>
@@ -93,8 +94,7 @@ const Dashboard = (props) => {
                 <Button className="controlBoardBtnOrange" onClick={activateEmergencyShutdown}>Emergency Shutdown</Button>
                 <Button className="controlBoardBtnBlue" onClick={activateControlledShutdown}>Controlled Shutdown</Button>
                 <Button className="controlBoardBtnBlue" onClick={toggleCoolantActivation}>Enable/Disable Coolant</Button>
-                <Button className="controlBoardBtnOrange">RESET</Button>
-                <Button className="controlBoardBtnBlue" onClick={startReactors}>Start Reactors</Button>
+                <Button className="controlBoardBtnOrange" onClick={activateReset}>RESET</Button>
             </section>
             <div className="toggleButtons">
                 <Switch className="toggleSwitch" />

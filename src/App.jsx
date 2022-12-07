@@ -62,43 +62,19 @@ const App = () => {
     // Reactors
     const rawReactors = await fetch(BASE_URL + apiKeyLink)
     const jsonReactors = await rawReactors.json()
-    // console.log(jsonReactors.reactors[0])
     if (jsonReactors.reactors.length > 0) {
       const modifiedReactors = Promise.all(jsonReactors.reactors.map(async (reactor) => {
         // Temperature
         const rawTemp = await fetch(BASE_URL + "/temperature/" + reactor.id + "" + apiKeyLink)
         const jsonTemp = await rawTemp.json()
-        // //Coolant
-        // const rawCoolant = await fetch(BASE_URL + "/coolant/" + reactor.id + "" + apiKeyLink)
-        // const jsonCoolant = await rawCoolant.json()
-        // //Output
-        // const rawOutput = await fetch(BASE_URL + "/output/" + reactor.id + "" + apiKeyLink)
-        // const jsonOutput = await rawOutput.json()
-        // //Fuel level
-        // const rawFuelLevel = await fetch(BASE_URL + "/fuel-level/" + reactor.id + "" + apiKeyLink)
-        // const jsonFuelLevel = await rawFuelLevel.json()
-        // //Reactor State
-        // const rawState = await fetch(BASE_URL + "/reactor-state/" + reactor.id + "" + apiKeyLink)
-        // const jsonState = await rawState.json()
-        // // jsonState.state = "Online"
-        // //Rod State
-        // const rawRodState = await fetch(BASE_URL + "/rod-state/" + reactor.id + "" + apiKeyLink)
-        // const jsonRodState = await rawRodState.json()
         return {
           ...reactor,
           tempAmount: jsonTemp.temperature.amount,
           tempUnit: jsonTemp.temperature.unit,
           tempStatus: jsonTemp.temperature.status,
-          // coolantStatus: jsonCoolant.coolant,
-          // output: jsonOutput.output,
-          // fuelLevel: jsonFuelLevel.fuel,
-          // reactorState: jsonState,
-          // rodState: jsonRodState
         }
       })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
-      // console.log(data.reactors)
 
-      // setReactors(modifiedReactors) gives a 'fulfilled' Promise even though I'm already running Promise.all()?
     }
     setIsLoading(false)
   }
