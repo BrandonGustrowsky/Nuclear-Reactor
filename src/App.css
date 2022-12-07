@@ -61,13 +61,25 @@ div > .titleContainer > .titleInput {
     transform: rotateX(-20deg) rotateY(20deg);
     width: 47vw;
     height: 400px;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     margin-left: -2%;
     box-shadow: var(--light-box-shadow);
     z-index: 0;
     border-bottom: 2px solid black;
+}
+
+#leftScreen .leftScreenChildOne {
+    overflow:visible;
+    /* background: var(--dark-blue); */
+    /* margin-top: -10px; */
+    
+}
+
+#leftScreen > .leftScreenChildTwo {
+    /* transform: rotateX(-20deg) rotateY(20deg); */
+    background: var(--light-blue);
+    /* margin-top: -10px; */
+
 }
 
 #centerScreen {
@@ -198,4 +210,20 @@ div > .titleContainer > .titleInput {
     width: 50px;
     height: 50px;
     color: var(--dark-blue);
+}
+
+.reactorTileContainer > .reactorTileChild{
+    background: var(--dark-blue);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s ease-out;
+}
+
+.reactorTileContainer > .reactorTileChild:hover {
+    background: var(--light-blue);
+    color: var(--dark-blue);
+    outline: 2px solid var(--dark-blue);
+    cursor: pointer;
 }
