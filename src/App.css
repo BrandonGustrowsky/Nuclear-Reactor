@@ -52,10 +52,45 @@ div > .titleContainer > .titleInput {
 }
 
 .panel > * {
-    margin: -8px;
+    width: 33.33333%;
+    height: 50vh;
+}
+
+.panel > *:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.panel > *:nth-child(2) {
+    /* padding: 0.5% 0; */
+    background: var(--orange);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3%;
+    justify-content: space-evenly;
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.panel > *:nth-child(2)::-webkit-scrollbar {
+    display: none;
+}
+
+.panel > *:nth-child(2) > * {
+    width: 45%;
+    margin-top: 2%;
+}
+
+.panel > *:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
+/* 
 #leftScreen {
     background: var(--light-blue);
     transform: rotateX(-20deg) rotateY(20deg);
@@ -73,17 +108,10 @@ div > .titleContainer > .titleInput {
     /* background: var(--dark-blue); */
     /* margin-top: -10px; */
     
-}
-
-#leftScreen > .leftScreenChildTwo {
-    /* transform: rotateX(-20deg) rotateY(20deg); */
-    background: var(--light-blue);
-    /* margin-top: -10px; */
-
-}
+/* } */
 
 #centerScreen {
-    background: var(--orange);
+    /* background: var(--orange);
     padding-top: 8px;
     margin-top: -1.7%;
     width: 47vw;
@@ -97,7 +125,7 @@ div > .titleContainer > .titleInput {
     gap: 3%;
     overflow: scroll;
     scrollbar-width: none;
-    -ms-overflow-style: none;
+    -ms-overflow-style: none; */
 }
 /* For Chrome, Safari, and Opera https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp#:~:text=Learn%20how%20to%20hide%20scrollbars%20with%20CSS.%20Add,will%20also%20remove%20the%20functionality%20of%20the%20scrollbar. */
 #centerScreen::-webkit-scrollbar { 
@@ -114,7 +142,7 @@ div > .titleContainer > .titleInput {
 
 
 #rightScreen {
-    transform: rotateX(-20deg) rotateY(-20deg);
+    /* transform: rotateX(-20deg) rotateY(-20deg);
     background: var(--light-blue);
     width: 47vw;
     height: 400px;
@@ -124,7 +152,7 @@ div > .titleContainer > .titleInput {
     margin-right: -1%;
     box-shadow: var(--light-box-shadow);
     z-index: 0;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid black; */
 }
 
 .controlBoard {
@@ -198,10 +226,8 @@ div > .titleContainer > .titleInput {
     bottom: 70px;
 }
 
-.toggleSwitch {
+.toggleButtons > .toggleSwitch {
     transform: rotateZ(270deg);
-    width: 50px;
-    height: 50px;
     color: var(--dark-blue);
 }
 

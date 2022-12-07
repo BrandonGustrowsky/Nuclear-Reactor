@@ -1,6 +1,6 @@
 import Title from "../components/Title"
 import ReactorTile from "../components/ReactorTile"
-import { Typography, Button, Switch } from '@mui/material';
+import { Typography, Button, Switch, Paper } from '@mui/material';
 import {
     Routes,
     Route,
@@ -10,35 +10,11 @@ import { useState } from "react"
 
 const Dashboard = (props) => {
     const { data, url, setData } = props
-
-    const startReactors = () => {
-        data.reactors.map(async (reactor) => {
-            const maintenance = await fetch(url.BASE_URL + "/maintenance/" + reactor.id + "" + url.apiKeyLink, {
-                method: "POST",
-                headers: {
-                    'Content-Type': "application/json",
-                    'Accept': "application/json",
-                },
-            })
-            const refuel = await fetch(url.BASE_URL + "/refuel/" + reactor.id + "" + url.apiKeyLink, {
-                method: "POST",
-                headers: {
-                    'Content-Type': "application/json",
-                    'Accept': "application/json",
-                },
-            })
-            const startReactor = await fetch(url.BASE_URL + "/start-reactor/" + reactor.id + "" + url.apiKeyLink, {
-                method: "POST",
-                headers: {
-                    'Content-Type': "application/json",
-                    'Accept': "application/json",
-                },
-            })
-            return reactor
-        })
-    }
+    const [leftToggle, setLeftToggle] = useState(false)
+    const [rightToggle, setRightToggle] = useState(false)
 
     const activateControlledShutdown = () => {
+
         data.reactors.map(async (reactor) => {
             const shutdown = await fetch(url.BASE_URL + "/controlled-shutdown/" + reactor.id + "" + url.apiKeyLink,  {
                 method: "POST",
@@ -61,34 +37,35 @@ const Dashboard = (props) => {
     }
 
     const toggleCoolantActivation = () => {
-        data.reactors.map(() => {
-            const toggleCoolant = fetch(url.BASE_URL + "/")
+        data.reactors.map(async () => {
+            const toggleCoolant = await fetch(url.BASE_URL + "/")
         })
     }
 
     const activateReset = async () => {
-        const reset = fetch(BASE_URL + "/reset" + apiKeyLink)
+        if (leftToggle && rightToggle) { //Only run if both switches are flipped
+            const reset = await fetch(BASE_URL + "/reset" + apiKeyLink)
+        }
     }
-
+    
     return (
         <>
             <Title text={data.plant_name} url={url} plantName={data.plant_name} setData={setData} />
             {/* Main Screens */}
             <section className="panel">
-                <div id="leftScreen">
-                    <div className="leftScreenChildOne"style={{position: "absolute", top: "-20px", zIndex: 2, background:"red"}}></div>
-                    <div className="leftScreenChildTwo" style={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center", zIndex: 6}}>
+                <Paper elevation={5}>
+                    <div>
                         <Typography style={{ fontSize: "25px" }}>Average Temperature</Typography>
                     </div>
-                </div>
-                <div id="centerScreen">
+                </Paper>
+                <Paper elevation={5}>
                     {data.reactors && data.reactors.map((reactor, index) => {
                         return <ReactorTile key={index} reactor={reactor} url={url} />
                     })}
-                </div>
-                <div id="rightScreen">
+                </Paper>
+                <Paper elevation={5}>
                     <Typography style={{ fontSize: "25px" }}>System Logs</Typography>
-                </div>
+                </Paper>
             </section>
             <section className="controlBoard">
                 <Button className="controlBoardBtnOrange" onClick={activateEmergencyShutdown}>Emergency Shutdown</Button>
@@ -97,8 +74,16 @@ const Dashboard = (props) => {
                 <Button className="controlBoardBtnOrange" onClick={activateReset}>RESET</Button>
             </section>
             <div className="toggleButtons">
-                <Switch className="toggleSwitch" />
-                <Switch className="toggleSwitch" />
+                <Switch className="toggleSwitch" onClick={() => {
+                    setLeftToggle((prevLeftToggle) => {
+                        return !prevLeftToggle
+                    })
+                }}/>
+                <Switch className="toggleSwitch" onClick={() => {
+                    setRightToggle((prevRightToggle) => {
+                        return !prevRightToggle
+                    })
+                }}/>
             </div>
         </>
     )
