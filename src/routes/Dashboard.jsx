@@ -81,7 +81,7 @@ const Dashboard = (props) => {
 
     return (
         <>
-            <Title url={url} plantName={data.plant_name} setData={setData} />
+            <Title url={url} name={data.plant_name} setData={setData} />
             {/* Main Screens */}
             <section className="panel">
                 <Paper elevation={5}>
