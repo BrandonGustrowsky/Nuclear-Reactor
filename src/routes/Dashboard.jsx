@@ -7,6 +7,7 @@ import {
     Link
 } from 'react-router-dom';
 import { useState } from "react"
+import { Graph } from "../components/Graph"
 
 const Dashboard = (props) => {
     const { data, logs, url, setData, setLogs } = props
@@ -87,6 +88,7 @@ const Dashboard = (props) => {
                 <Paper elevation={5}>
                     <div>
                         <Typography style={{ fontSize: "25px" }}>Average Temperature</Typography>
+                        <Graph data={data.reactors}/>
                         <Typography style={{fontSize: "20px"}}>Current Avg. Temp: {calculateAverageTemperature()} {temperatureUnit}</Typography>
                         <Typography style={{fontSize: "20px"}}>{calculateTotalOutput()} {outputUnit} output</Typography>
                     </div>
