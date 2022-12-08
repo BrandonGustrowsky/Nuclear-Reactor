@@ -7,7 +7,7 @@ import {
     Link
 } from 'react-router-dom';
 import { useState } from "react"
-import { Graph } from "../components/Graph"
+import Graph from "../components/Graph"
 
 const Dashboard = (props) => {
     const { data, logs, url, setData, setLogs } = props

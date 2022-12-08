@@ -2,10 +2,10 @@ import Title from "./Title"
 import ReactorTile from "./ReactorTile"
 import { useRef, useEffect } from 'react'
 
-const Graph = (props) => {const labels = Utils.months({count: 7});
-  const { data } = props;
-useEffect(() => {
+const Graph = (props) => {
+  const { data } = props
   const canvasRef = useRef(null)
+useEffect(() => {
   const chartData = new Chart(ctx, {
   labels: labels,
   type: 'line', 
