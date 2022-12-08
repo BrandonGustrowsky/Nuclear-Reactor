@@ -62,8 +62,12 @@ div > .titleContainer > .titleInput {
     align-items: center;
 }
 
+.panel > *:nth-child(1) > *:nth-child(1) > * {
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
 .panel > *:nth-child(2) {
-    /* padding: 0.5% 0; */
     background: var(--orange);
     display: flex;
     flex-wrap: wrap;
@@ -92,20 +96,22 @@ div > .titleContainer > .titleInput {
 .controlBoard {
     background: var(--neon);
     height: max-content;
-    padding: 80px 10px 10px 50px;
+    padding: 80px 10px 10px 10px;
     margin-top: -5vh;
     display: grid;
     grid-template-columns: repeat(2, 0.2fr);
     gap: 50px;
+    justify-content: center;
+    align-items: center;
 }
 
 .controlBoard > .controlBoardBtnBlue {
     background: var(--dark-blue);
     color: var(--white);
     outline: 2px solid var(--white);
-    height: 30px;
+    width: fit-content;
+    height: max-content;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .controlBoard > .controlBoardBtnBlue:hover {
@@ -118,39 +124,14 @@ div > .titleContainer > .titleInput {
     background: var(--orange);
     color: var(--dark-blue);
     outline: 2px solid var(--dark-blue);
-    height: 30px;
-    /* font-size: 1vw; */
+    height: max-content;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .controlBoard > .controlBoardBtnOrange:hover {
     background: var(--dark-blue);
     color: var(--orange);
     outline: 2px solid var(--orange);
-}
-
-.controlBoard *:nth-child(1) {
-    position: relative;
-    left: 100px;
-}
-
-.controlBoard *:nth-child(2) {
-    position: relative;
-    left: 125px;
-    bottom: 38px;
-}
-
-.controlBoard *:nth-child(3) {
-    position: relative;
-    left: 150px;
-    bottom: 10px;
-}
-
-.controlBoard *:nth-child(4) {
-    position: relative;
-    left: 200px;
-    bottom: 8px;
 }
 
 .toggleButtons {
@@ -186,10 +167,10 @@ div > .titleContainer > .titleInput {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     border: 2px solid var(--orange);
     border-radius: 5%;
-    resize: none;
-    width: 85%;
+    width: 80%;
+    padding: 20px;
     height: max-content;
-    min-height: 88%;
+    min-height: 70%;
     overflow: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -197,4 +178,33 @@ div > .titleContainer > .titleInput {
 
 #logsContainer::-webkit-scrollbar {
     display: none;
+}
+
+@media screen and (max-width: 1050px) {
+    .panel > *:nth-child(2) > * {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    .panel > *:nth-child(2) > * {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .panel {
+        flex-direction: column;
+        align-items: center;
+    }
+    .panel > * {
+        width: 100%;
+    }
+    .controlBoard {
+        grid-template-rows: 1fr;
+    }
+    .toggleButtons {
+        justify-content: space-between;
+        margin: 0 -10px;
+    }
 }

@@ -8,6 +8,8 @@ const Title = (props) => {
     const [isEditing, setIsEditing] = useState(false)
     const [hasBeenUpdated, setHasBeenUpdated] = useState(false)
 
+    console.log(plantName)
+
     const sendData = async (event) => {
         const { value } = event.target
         console.log(value)
@@ -41,7 +43,8 @@ const Title = (props) => {
                 {isEditing ?
                     <TextField autoFocus className="titleInput" variant="filled" value={ (isEditing ? currPlantName : plantName) }
                         // onChange={(event) => { setData((prevData) => ({...prevData, "plant_name" : event.target.value})) }} onBlur={() => { setIsEditing(false) }}
-                        onChange={(event) => { setCurrPlantName(event.target.value)}} onBlur={(event) => { sendData(event) }}
+                        onChange={(event) => { setCurrPlantName(event.target.value)}}
+                        onBlur={(event) => { sendData(event) }}
                         onKeyDown={(event) => { event.key === "Enter" ? sendData(event) : null }} />
                     :
                     <Button variant="text" onDoubleClick={() => { setIsEditing(true) }} className="titleReadOnly">{ hasBeenUpdated ? currPlantName : plantName }</Button>

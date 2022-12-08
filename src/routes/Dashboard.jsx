@@ -9,11 +9,9 @@ import {
 import { useState } from "react"
 
 const Dashboard = (props) => {
-    const { data, logs, url, setData } = props
+    const { data, logs, url, setData, setLogs } = props
     const [leftToggle, setLeftToggle] = useState(false)
     const [rightToggle, setRightToggle] = useState(false)
-
-    console.log(logs)
 
     const activateControlledShutdown = () => {
 
@@ -50,6 +48,23 @@ const Dashboard = (props) => {
         }
     }
 
+    const calculateAverageTemperature = () => {
+        const temperature = data.reactors.reduce((accumulator, reactor) => {
+            accumulator += reactor.tempAmount
+            return accumulator
+        }, 0)
+    }
+
+    let msgs = []
+
+    logs.length > 0 && logs.map((log, index) => {
+        for (const arr of Object.values(log)) {
+            for (const msg of arr) {
+                msgs.push(msg)
+            }
+        }
+    })
+
     return (
         <>
             <Title text={data.plant_name} url={url} plantName={data.plant_name} setData={setData} />
@@ -58,6 +73,8 @@ const Dashboard = (props) => {
                 <Paper elevation={5}>
                     <div>
                         <Typography style={{ fontSize: "25px" }}>Average Temperature</Typography>
+                        <Typography style={{fontSize: "20px"}}>Current Average Temperature: 316 degrees C</Typography>
+                        <Typography style={{fontSize: "20px"}}>100 GW output</Typography>
                     </div>
                 </Paper>
                 <Paper elevation={5}>
@@ -68,9 +85,9 @@ const Dashboard = (props) => {
                 <Paper elevation={5}>
                     <Typography style={{ fontSize: "25px" }}>System Logs</Typography>
                     <Paper id="logsContainer">
-                        {logs.length > 0 && logs.map((log, index) => {
-                            return <p key={index}>{log.dynamic_id}</p>
-                        })}
+                    {msgs.map((msg) => {
+                        return <p style={{lineHeight: "20px"}}>{msg}</p>
+                    })}
                     </Paper>
                 </Paper>
             </section>
