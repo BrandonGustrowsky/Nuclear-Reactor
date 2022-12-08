@@ -2,13 +2,11 @@ import { Button, fabClasses, TextField } from '@mui/material';
 import { useEffect, useState } from "react"
 
 const Title = (props) => {
-    const { text, url, plantName, setData } = props
+    const { url, plantName, setData } = props
 
     const [currPlantName, setCurrPlantName] = useState(plantName)
     const [isEditing, setIsEditing] = useState(false)
     const [hasBeenUpdated, setHasBeenUpdated] = useState(false)
-
-    console.log(plantName)
 
     const sendData = async (event) => {
         const { value } = event.target
@@ -41,7 +39,7 @@ const Title = (props) => {
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div className="titleContainer">
                 {isEditing ?
-                    <TextField autoFocus className="titleInput" variant="filled" value={ (isEditing ? currPlantName : plantName) }
+                    <TextField autoFocus className="titleInput" variant="filled" value={ (isEditing ? (currPlantName ? currPlantName : plantName) : plantName) }
                         // onChange={(event) => { setData((prevData) => ({...prevData, "plant_name" : event.target.value})) }} onBlur={() => { setIsEditing(false) }}
                         onChange={(event) => { setCurrPlantName(event.target.value)}}
                         onBlur={(event) => { sendData(event) }}

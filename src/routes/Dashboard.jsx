@@ -48,18 +48,32 @@ const Dashboard = (props) => {
         }
     }
 
+    let temperatureUnit = "F"
+
     const calculateAverageTemperature = () => {
         const temperature = data.reactors.reduce((accumulator, reactor) => {
             accumulator += reactor.tempAmount
+            temperatureUnit = reactor.tempUnit
             return accumulator
         }, 0)
+        return (temperature/data.reactors.length).toFixed(2)
+    }
+
+    const outputUnit = "Gigawatt (GW)"
+    const calculateTotalOutput = () => {
+        const totalMegawattOutput = data.reactors.reduce((accumulator, reactor) => {
+            accumulator += reactor.outputAmount
+            console.log(reactor.outputAmount)
+            return accumulator
+        }, 0)
+        return (totalMegawattOutput/1000).toFixed(2) // Convert to Gigawatts (project specification)
     }
 
     let msgs = []
 
-    logs.length > 0 && logs.map((log, index) => {
-        for (const arr of Object.values(log)) {
-            for (const msg of arr) {
+    logs.length > 0 && logs.map((log, index) => { // Get each object
+        for (const arr of Object.values(log)) { // Get the array of messages from each object
+            for (const msg of arr) { //Get each individual message
                 msgs.push(msg)
             }
         }
@@ -67,14 +81,14 @@ const Dashboard = (props) => {
 
     return (
         <>
-            <Title text={data.plant_name} url={url} plantName={data.plant_name} setData={setData} />
+            <Title url={url} plantName={data.plant_name} setData={setData} />
             {/* Main Screens */}
             <section className="panel">
                 <Paper elevation={5}>
                     <div>
                         <Typography style={{ fontSize: "25px" }}>Average Temperature</Typography>
-                        <Typography style={{fontSize: "20px"}}>Current Average Temperature: 316 degrees C</Typography>
-                        <Typography style={{fontSize: "20px"}}>100 GW output</Typography>
+                        <Typography style={{fontSize: "20px"}}>Current Avg. Temp: {calculateAverageTemperature()} {temperatureUnit}</Typography>
+                        <Typography style={{fontSize: "20px"}}>{calculateTotalOutput()} {outputUnit} output</Typography>
                     </div>
                 </Paper>
                 <Paper elevation={5}>

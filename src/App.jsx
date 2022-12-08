@@ -10,7 +10,7 @@ const App = () => {
   const BASE_URL = "https://nuclear.dacoder.io/reactors"
   const apiKey = "21a518c670a84119"
   const apiKeyLink = "?apiKey=" + apiKey
-  const defaultReactorObject = { "reactors": [], "plant_name": "Nuclear Plant" }
+  const defaultReactorObject = { "reactors": [], "plant_name": null }
   const defaultLogObject = { dynamic_id : []}
 
   const [data, setData] = useState(defaultReactorObject)
@@ -61,19 +61,25 @@ const App = () => {
 
   const getData = async () => {
     setIsLoading(true)
-    // Reactors
+    // Get reactors
     const rawReactors = await fetch(BASE_URL + apiKeyLink)
     const jsonReactors = await rawReactors.json()
     if (jsonReactors.reactors.length > 0) {
       const modifiedReactors = Promise.all(jsonReactors.reactors.map(async (reactor) => {
-        // Temperature
+        // Get temperature
         const rawTemp = await fetch(BASE_URL + "/temperature/" + reactor.id + "" + apiKeyLink)
         const jsonTemp = await rawTemp.json()
+
+        // Get output data
+        const rawOutput = await fetch(BASE_URL + "/output/" + reactor.id + "" + apiKeyLink)
+        const jsonOutput = await rawOutput.json()
         return {
           ...reactor,
           tempAmount: jsonTemp.temperature.amount,
           tempUnit: jsonTemp.temperature.unit,
           tempStatus: jsonTemp.temperature.status,
+          outputAmount: jsonOutput.output.amount,
+          outputUnit: jsonOutput.output.unit,
         }
       })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
 
@@ -85,7 +91,7 @@ const App = () => {
     setIsLoading(false)
   }
   useEffect(() => {
-    const id = setInterval(getData, 1000) //On mount
+    const id = setInterval(getData, 150) //On mount
     return () => { clearInterval(id) }  //On component dismount
   }, [])
 
