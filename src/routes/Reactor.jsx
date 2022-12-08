@@ -1,11 +1,16 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import Title from "../components/Title"
+import { Typography, Button } from "@mui/material"
 const Reactor = () => {
     const [ data, setData ] = useState({})
     const BASE_URL = "https://nuclear.dacoder.io/reactors"
     const apiKey = "21a518c670a84119"
     const apiKeyLink = "?apiKey=" + apiKey
     const { id } = useParams("id")
+    const url = { BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }
+    const navigate = useNavigate()
 
     // Call this function when the user clicks the "Emergency Shutdown" button
     const activateEmergencyShutdown = async () => {
@@ -152,7 +157,17 @@ const Reactor = () => {
     
     return (
         <>
-            <p>Reactor</p>
+            <header>
+                <Title url={ url } name={ "Reactor 1" } setData={ setData } />
+                <Button variant="text" id="closeBtn" onClick={() => {
+                    console.log("called")
+                    navigate("/")
+                }}>X</Button>
+            </header>
+            <main>
+                <Typography variant="h1" style={{fontSize: "25px"}}>{ data.reactorState }</Typography>
+            </main>
+            
         </>
     )
 }

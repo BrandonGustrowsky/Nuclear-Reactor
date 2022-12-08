@@ -36,6 +36,7 @@ div > .titleContainer > .titleReadOnly {
     text-align: center;
     line-height: 75px;
     background: transparent;
+    color: var(--white);
 }
 
 div > .titleContainer > .titleInput {
@@ -207,4 +208,14 @@ div > .titleContainer > .titleInput {
         justify-content: space-between;
         margin: 0 -10px;
     }
+}
+
+#closeBtn {
+    color: var(--white);
+    font-size: 30px;
+    text-shadow: #BFD7EA;
+    line-height: 1px;
+    position: absolute;
+    right: 0;
+    top: 25px;
 }

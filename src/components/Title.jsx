@@ -2,9 +2,9 @@ import { Button, fabClasses, TextField } from '@mui/material';
 import { useEffect, useState } from "react"
 
 const Title = (props) => {
-    const { url, plantName, setData } = props
+    const { url, name, setData } = props
 
-    const [currPlantName, setCurrPlantName] = useState(plantName)
+    const [currName, setCurrName] = useState(name)
     const [isEditing, setIsEditing] = useState(false)
     const [hasBeenUpdated, setHasBeenUpdated] = useState(false)
 
@@ -39,13 +39,13 @@ const Title = (props) => {
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div className="titleContainer">
                 {isEditing ?
-                    <TextField autoFocus className="titleInput" variant="filled" value={ (isEditing ? (currPlantName ? currPlantName : plantName) : plantName) }
+                    <TextField autoFocus className="titleInput" variant="filled" value={ (isEditing ? (currName ? currName : name) : name) }
                         // onChange={(event) => { setData((prevData) => ({...prevData, "plant_name" : event.target.value})) }} onBlur={() => { setIsEditing(false) }}
-                        onChange={(event) => { setCurrPlantName(event.target.value)}}
+                        onChange={(event) => { setCurrName(event.target.value)}}
                         onBlur={(event) => { sendData(event) }}
                         onKeyDown={(event) => { event.key === "Enter" ? sendData(event) : null }} />
                     :
-                    <Button variant="text" onDoubleClick={() => { setIsEditing(true) }} className="titleReadOnly">{ hasBeenUpdated ? currPlantName : plantName }</Button>
+                    <Button variant="text" onDoubleClick={() => { setIsEditing(true) }} className="titleReadOnly">{ hasBeenUpdated ? currName : name }</Button>
                 }
             </div>
         </div>
