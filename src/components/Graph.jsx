@@ -1,20 +1,35 @@
 import Title from "./Title"
 import ReactorTile from "./ReactorTile"
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { Chart } from "chart.js/auto"
 
 const Graph = (props) => {
   const { data } = props
   const canvasRef = useRef(null)
+  const [temperatures, setTemperatures] = useState([])
+
+  const calculateAverageTemperature = () => {
+    const averageTemp = data.reduce((accumulator, reactor) => {
+      accumulator += reactor.tempAmount
+      return accumulator
+    }, 0) / data.length
+
+    setTemperatures((prevTemperatures) => {
+      return [...prevTemperatures, averageTemp]
+    })
+  }
+
 useEffect(() => {
+  calculateAverageTemperature()
+  const ctx = canvasRef.current
   const chartData = new Chart(ctx, {
-  labels: labels,
   type: 'line', 
   data: {
-    labels: [1, 3, 100],
+    labels: temperatures.map((temp, index) => {return index}),
     datasets: [{
       label: 'Average Reactor Temperature',
-      data: [65, 59, 80, 81, 56, 55, 40],
-      fill: false,
+      data: temperatures,
+      fill: true,
       borderColor: 'rgb(75, 192, 192)',
       tension: 0.1
     }]
@@ -34,8 +49,12 @@ useEffect(() => {
 }, [data])
 
 return (
-  <canvas ref={canvasRef}>
+  <>
+   <canvas ref={canvasRef}>
   </canvas>
+  <script src="chart.js"></script>
+  </>
+ 
 )
 }
 
