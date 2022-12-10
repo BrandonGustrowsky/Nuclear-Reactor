@@ -3,8 +3,12 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import Title from "../components/Title"
 import { Typography, Button } from "@mui/material"
+import CloseIcon from '@mui/icons-material/Close';
+import { useSnackbar } from 'notistack';
+
 const Reactor = () => {
-    const [ data, setData ] = useState({})
+    const [data, setData] = useState({})
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
     const BASE_URL = "https://nuclear.dacoder.io/reactors"
     const apiKey = "21a518c670a84119"
     const apiKeyLink = "?apiKey=" + apiKey
@@ -14,6 +18,7 @@ const Reactor = () => {
 
     // Call this function when the user clicks the "Emergency Shutdown" button
     const activateEmergencyShutdown = async () => {
+        console.log(id)
         const shutdown = await fetch(BASE_URL + "/emergency-shutdown/" + id + "" + apiKeyLink, {
             method: "POST",
             headers: {
@@ -21,11 +26,13 @@ const Reactor = () => {
                 'Accept': "application/json",
             },
         })
-    }
-    
+        (shutdown.status == 201 && enqueueSnackbar("Emergency shutdown complete"))
+        (shutdown.status == 400 && enqueueSnackbar("Emergency shutdown failed for some reason"))
+    }   
+
     // Call this function when the user clicks the "Controlled Shutdown" button
     const activateControlledShutdown = async () => {
-        const shutdown = await fetch(BASE_URL + "/controlled-shutdown/" + id + "" + apiKeyLink,  {
+        const shutdown = await fetch(BASE_URL + "/controlled-shutdown/" + id + "" + apiKeyLink, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -78,18 +85,48 @@ const Reactor = () => {
         })
     }
 
+    // Call this function when the user attempts to change the coolant for the reactor
+    const activateToggleCoolant = async () => {
+        const rawCoolant = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink)
+        const jsonCoolant = await rawCoolant.json()
+        const coolant = jsonCoolant.coolant.stringify()
+        console.log("passed queue")
+        const response = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: {
+                coolant: (coolant === "on" ? "off" : "on"),
+            },
+        })
+        if (response.status === 201 || response.status === 304) {
+            enqueueSnackbar(`The coolant has been toggled ${jsonCoolant.coolant}`)
+        } else {
+            const text = response.text()
+            enqueueSnackbar(text)
+        }
+    }
+
     // Call this function when the user attempts to start the reactor
     const activateStartReactor = async () => {
         activateMaintenance()
         activateRefuel()
-        
-        const startReactor = await fetch(BASE_URL + "/start-reactor/" + id + "" + apiKeyLink, {
+
+        const response = await fetch(BASE_URL + "/start-reactor/" + id + "" + apiKeyLink, {
             method: "POST",
             headers: {
                 'Content-Type': "application/json",
                 'Accept': "application/json",
             },
         })
+        if (response.status === 201) {
+            enqueueSnackbar(`${reactor.name} has been started!`)
+        } else {
+            const text = response.text()
+            enqueueSnackbar(text)
+        }
     }
 
     const buildReactor = async () => {
@@ -116,59 +153,71 @@ const Reactor = () => {
         // Get rod state data
         const rawRodState = await fetch(BASE_URL + "/rod-state/" + id + "" + apiKeyLink)
         const jsonRodState = await rawRodState.json()
-        
+
         setData({
-            temperature: jsonTemperature.temperature,
+            tempAmount: jsonTemperature.temperature.amount,
+            tempUnit: jsonTemperature.temperature.unit,
+            tempStatus: jsonTemperature.temperature.status,
             coolant: jsonCoolant.coolant,
-            output: jsonOutput.output,
+            outputAmount: jsonOutput.output.amount,
+            outputUnit: jsonOutput.output.unit,
             fuelLevel: jsonFuelLevel.fuel,
             reactorState: jsonReactorState.state,
-            rodState: jsonRodState.control_rods,
+            rodStateIn: jsonRodState.control_rods.in,
+            rodStateOut: jsonRodState.control_rods.out,
         })
     }
 
     useEffect(() => {
-        const id = setInterval(buildReactor, 1000) //On mount
+        const id = setInterval(buildReactor, 2000) //On mount
         return () => { clearInterval(id) }  //On component dismount
-      }, [])
-
-    const getReactorData = async () => {
-        //Coolant
-        const rawCoolant = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink)
-        const jsonCoolant = await rawCoolant.json()
-        //Output
-        const rawOutput = await fetch(BASE_URL + "/output/" + id + "" + apiKeyLink)
-        const jsonOutput = await rawOutput.json()
-        //Fuel level
-        const rawFuelLevel = await fetch(BASE_URL + "/fuel-level/" + id + "" + apiKeyLink)
-        const jsonFuelLevel = await rawFuelLevel.json()
-        //Reactor State
-        const rawState = await fetch(BASE_URL + "/reactor-state/" + id + "" + apiKeyLink)
-        const jsonState = await rawState.json()
-        // jsonState.state = "Online"
-        //Rod State
-        const rawRodState = await fetch(BASE_URL + "/rod-state/" + id + "" + apiKeyLink)
-        const jsonRodState = await rawRodState.json()
-    }
-
-    useEffect(() => {
-        getReactorData()
     }, [])
-    
+
     return (
-        <>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <header>
-                <Title url={ url } name={ "Reactor 1" } setData={ setData } />
-                <Button variant="text" id="closeBtn" onClick={() => {
-                    console.log("called")
+                <Title url={url} name={"Reactor 1"} setData={setData} />
+                <Button variant="text" style={{ position: "absolute", right: "0", top: "25px" }} onClick={() => {
                     navigate("/")
-                }}>X</Button>
+                }}><CloseIcon id="closeBtn" /></Button>
             </header>
-            <main>
-                <Typography variant="h1" style={{fontSize: "25px"}}>{ data.reactorState }</Typography>
+            <main id="reactorMainContent">
+                <Typography variant="h1" style={{ fontSize: "25px" }}>{data.reactorState}</Typography>
+                <Typography variant="h2" style={{ fontSize: "25px" }}>Coolant: {data.coolant}</Typography>
+                <section>
+                    <Typography variant="h3">Average Temperature</Typography>
+                    {/* Place graph here with average temperature */}
+                </section>
+                <section>
+                    <Typography>Rod State: In: {data.rodStateIn}</Typography>
+                    <Typography>Rod State: Out: {data.rodStateOut}</Typography>
+                </section>
+                <Typography>Level: {data.tempStatus}</Typography>
+                <Typography>Output: {data.outputAmount} {data.outputUnit} </Typography>
+                <section style={{display: "flex", justifyContent: "space-between", width: "90%"}}>
+                    <div className="reactorActions">
+                        <Button className="reactorShutdownBtn" onClick={activateEmergencyShutdown}></Button>
+                        <Typography>Emergency Shutdown</Typography>
+                    </div>
+                    <div className="reactorActions">
+                        <Button className="reactorShutdownBtn" onClick={activateControlledShutdown}></Button>
+                        <Typography>Controlled Shutdown</Typography>
+                    </div>
+                    <div className="reactorActions">
+                        <Button className="reactorShutdownBtn" onClick={activateRefuel}></Button>
+                        <Typography>Refuel Reactor</Typography>
+                    </div>
+                    <div className="reactorActions">
+                        <Button className="reactorShutdownBtn" onClick={activateToggleCoolant}></Button>
+                        <Typography>Toggle Coolant</Typography>
+                    </div>
+                    <div className="reactorActions">
+                        <Button className="reactorShutdownBtn" onClick={activateStartReactor}></Button>
+                        <Typography>Start Reactor</Typography>
+                    </div>
+                </section>
             </main>
-            
-        </>
+        </div>
     )
 }
 

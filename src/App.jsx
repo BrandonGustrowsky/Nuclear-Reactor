@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Dashboard from "./routes/Dashboard"
+// import { SnackbarProvider } from "notistack"
 import './App.css'
 // import { BrowserRouter as Router } from "react-router-dom"
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -11,7 +12,7 @@ const App = () => {
   const apiKey = "21a518c670a84119"
   const apiKeyLink = "?apiKey=" + apiKey
   const defaultReactorObject = { "reactors": [], "plant_name": null }
-  const defaultLogObject = { dynamic_id : []}
+  const defaultLogObject = { dynamic_id: [] }
 
   const [data, setData] = useState(defaultReactorObject)
   const [isLoading, setIsLoading] = useState(false)
@@ -82,7 +83,7 @@ const App = () => {
           outputUnit: jsonOutput.output.unit,
         }
       })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
-
+s
     }
     // Get log data
     const rawLogs = await fetch(BASE_URL + "/logs" + apiKeyLink)
@@ -96,10 +97,11 @@ const App = () => {
   }, [])
 
   return (
-    <>  
+    <>
       <ThemeProvider theme={theme}>
         {/* Get the plant naming function through as a prop */}
         <Dashboard data={data} logs={logs} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} setLogs={setLogs} />
+
       </ThemeProvider>
 
     </>

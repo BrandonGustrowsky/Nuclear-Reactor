@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from 'react'
 import { Chart } from "chart.js/auto"
 
 const Graph = (props) => {
-  const { data } = props
+  const { data, width, height } = props
   const canvasRef = useRef(null)
   const [temperatures, setTemperatures] = useState([])
 
@@ -24,6 +24,7 @@ useEffect(() => {
   const ctx = canvasRef.current
   const chartData = new Chart(ctx, {
   type: 'line', 
+  
   data: {
     labels: temperatures.map((temp, index) => {return index}),
     datasets: [{

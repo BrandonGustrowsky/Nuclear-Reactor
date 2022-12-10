@@ -7,32 +7,51 @@ import {
     Link
 } from 'react-router-dom';
 import { useState } from "react"
+import { useSnackbar } from 'notistack';
 import Graph from "../components/Graph"
 
 const Dashboard = (props) => {
     const { data, logs, url, setData, setLogs } = props
     const [leftToggle, setLeftToggle] = useState(false)
     const [rightToggle, setRightToggle] = useState(false)
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
     const activateControlledShutdown = () => {
-
         data.reactors.map(async (reactor) => {
-            const shutdown = await fetch(url.BASE_URL + "/controlled-shutdown/" + reactor.id + "" + url.apiKeyLink,  {
+            const response = await fetch(url.BASE_URL + "/controlled-shutdown/" + reactor.id + "" + url.apiKeyLink,  {
                 method: "POST",
             })
+            if (response.status === 201) {
+                enqueueSnackbar("Controlled shutdown was successful!")
+            } else {
+                const text = await response.text()
+                enqueueSnackbar(text)
+            }
             return reactor
         })
     }
 
     const activateEmergencyShutdown = () => {
         data.reactors.map(async (reactor) => {
-            const shutdown = await fetch(url.BASE_URL + "/emergency-shutdown/" + reactor.id + "" + url.apiKeyLink, {
+            const response = await fetch(url.BASE_URL + "/emergency-shutdown/" + reactor.id + "" + url.apiKeyLink, {
                 method: "POST",
                 headers: {
                     'Content-Type': "application/json",
                     'Accept': "application/json",
                 },
             })
+            if (response.status === 201) {
+                enqueueSnackbar("Emergency shutdown successful")
+            } else {
+                const text = await response.text()
+                enqueueSnackbar(text)
+            }
+            
+            // if (response.status === 201) {
+            //     enqueueSnackbar(`Emergency shutdown on ${reactor.name} was successful`)
+            // } else {
+            //     enqueueSnackbar(`Ooops! ${reactor.name} could not be emergency shutdown`)
+            // }
             return reactor
         })
     }
@@ -45,8 +64,24 @@ const Dashboard = (props) => {
 
     const activateReset = async () => {
         if (leftToggle && rightToggle) { //Only run if both switches are flipped
-            const reset = await fetch(BASE_URL + "/reset" + apiKeyLink)
+            const response = await fetch(url.BASE_URL + "/reset" + url.apiKeyLink, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            })
+            if (response.status !== 201) {
+                const text = await response.text()
+                enqueueSnackbar(text)
+            } else {
+                enqueueSnackbar("Global reset was successful!")
+            }
+
+        } else {
+            enqueueSnackbar("Both safety levers must be turned on to perform a global reset!")
         }
+        
     }
 
     let temperatureUnit = "F"
@@ -64,7 +99,6 @@ const Dashboard = (props) => {
     const calculateTotalOutput = () => {
         const totalMegawattOutput = data.reactors.reduce((accumulator, reactor) => {
             accumulator += reactor.outputAmount
-            console.log(reactor.outputAmount)
             return accumulator
         }, 0)
         return (totalMegawattOutput/1000).toFixed(2) // Convert to Gigawatts (project specification)
@@ -88,7 +122,7 @@ const Dashboard = (props) => {
                 <Paper elevation={5}>
                     <div>
                         <Typography style={{ fontSize: "25px" }}>Average Temperature</Typography>
-                        <Graph data={data.reactors}/>
+                        <Graph data={data.reactors} width="500px" height="200px"/>
                         <Typography style={{fontSize: "20px"}}>Current Avg. Temp: {calculateAverageTemperature()} {temperatureUnit}</Typography>
                         <Typography style={{fontSize: "20px"}}>{calculateTotalOutput()} {outputUnit} output</Typography>
                     </div>

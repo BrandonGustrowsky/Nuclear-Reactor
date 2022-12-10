@@ -20,6 +20,7 @@
     "@mui/styled-engine-sc": "^5.10.14",
     "chart.js": "^4.0.1",
     "chartjs": "^0.3.24",
+    "notistack": "^2.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
