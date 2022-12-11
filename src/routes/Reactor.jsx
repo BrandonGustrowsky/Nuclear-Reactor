@@ -112,6 +112,7 @@ const activateToggleCoolant = async () => {
         const jsonCoolant = await rawCoolant.json()
         const coolant = jsonCoolant.coolant
         const newCoolant = (coolant === "on" ? "off" : "on")
+        console.log(newCoolant)
         const response = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink, {
             method: "POST",
             headers: {
@@ -123,7 +124,7 @@ const activateToggleCoolant = async () => {
             }),
         })
         if (response.status === 201 || response.status === 304) {
-            enqueueSnackbar(`The coolant has been toggled ${jsonCoolant.coolant}`)
+            enqueueSnackbar(`The coolant has been toggled ${newCoolant}`)
         } else {
             const text = response.text()
             enqueueSnackbar(text)
