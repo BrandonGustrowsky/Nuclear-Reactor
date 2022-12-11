@@ -107,7 +107,7 @@ const Dashboard = (props) => {
         return (temperature/data.reactors.length).toFixed(2)
     }
 
-    const outputUnit = "Gigawatt (GW)"
+    const outputUnit = "Gigawatts (GW)"
     const calculateTotalOutput = () => {
         const totalMegawattOutput = data.reactors.reduce((accumulator, reactor) => {
             accumulator += reactor.outputAmount

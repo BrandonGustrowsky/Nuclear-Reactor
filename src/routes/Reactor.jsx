@@ -195,13 +195,13 @@ const Reactor = () => {
 
         setData({
             reactorName: theReactorAsArray[0].name,
-            tempAmount: jsonTemperature.temperature.amount,
+            tempAmount: jsonTemperature.temperature.amount.toFixed(2),
             tempUnit: jsonTemperature.temperature.unit,
             tempStatus: jsonTemperature.temperature.status,
             coolant: jsonCoolant.coolant,
             outputAmount: jsonOutput.output.amount,
             outputUnit: jsonOutput.output.unit,
-            fuelLevel: jsonFuelLevel.fuel,
+            fuel: jsonFuelLevel.fuel.percentage.toFixed(2),
             reactorState: jsonReactorState.state,
             rodStateIn: jsonRodState.control_rods.in,
             rodStateOut: jsonRodState.control_rods.out,
@@ -268,6 +268,7 @@ const Reactor = () => {
             <main id="reactorMainContent">
                 <Typography variant="h1" style={{ fontSize: "25px" }}>Reactor State: <span style={{ fontWeight: "600" }}>{data.reactorState}</span></Typography>
                 <Typography variant="h2" style={{ fontSize: "25px" }}>Coolant: {data.coolant}</Typography>
+                <Typography variant="h2" sx={{fontSize: "25px"}}>Fuel Level: {data.fuel}%</Typography>
                 <section>
                     <div className="rodStateContainer">
                         <Typography>Rod State: In: {data.rodStateIn}</Typography>
@@ -279,7 +280,7 @@ const Reactor = () => {
                     </div>
                 </section>
                 <div id="graphContainer">
-                    <Typography variant="h3" style={{ fontSize: "25px", textAlign: "center" }}>Current Temperature: {Number(data.tempAmount).toFixed(2)} ˚{data.tempUnit === "celsius" ? "C" : "F"}</Typography>
+                    <Typography variant="h3" style={{ fontSize: "25px", textAlign: "center" }}>Current Temperature: {Number(data.tempAmount)} ˚{data.tempUnit === "celsius" ? "C" : "F"}</Typography>
                     <Graph data={data} width="200px" height="250px" temperature={data.tempAmount} pollingRate={pollingRate} />
                 </div>
                 <Typography>Level: {data.tempStatus}</Typography>
