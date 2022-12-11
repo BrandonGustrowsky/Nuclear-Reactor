@@ -83,7 +83,7 @@ const App = () => {
           outputUnit: jsonOutput.output.unit,
         }
       })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
-s
+
     }
     // Get log data
     const rawLogs = await fetch(BASE_URL + "/logs" + apiKeyLink)
