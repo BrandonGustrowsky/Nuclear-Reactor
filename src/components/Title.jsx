@@ -30,6 +30,7 @@ const Title = (props) => {
                 if (response.status == 200) {
                     console.log(response)
                     setIsEditing(false)
+                    setCurrName(value)
                     setHasBeenUpdated(true)
                     console.log("Ran")
                 } else {

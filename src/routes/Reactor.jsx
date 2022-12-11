@@ -271,11 +271,11 @@ const Reactor = () => {
                 <section>
                     <div className="rodStateContainer">
                         <Typography>Rod State: In: {data.rodStateIn}</Typography>
-                        <input type="text" id="first" name="dropRod" onChange={event => setFirst(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
+                        <input type="text" id="first" className="rodInputAmount" name="dropRod" onChange={event => setFirst(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
                     </div>
                     <div className="rodStateContainer">
                         <Typography>Rod State: Out: {data.rodStateOut}</Typography>
-                        <input type="text" id="last" name="removeRod" onChange={event => setLast(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
+                        <input type="text" id="last" name="removeRod" className="rodInputAmount" onChange={event => setLast(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
                     </div>
                 </section>
                 <div id="graphContainer">
@@ -295,15 +295,15 @@ const Reactor = () => {
                     </div>
                     <div className="reactorActions">
                         <Button className="reactorShutdownBtn" onClick={activateRefuel}></Button>
-                        <Typography>Refuel Reactor</Typography>
+                        <Typography sx={{marginLeft: "10px"}}>Refuel Reactor</Typography>
                     </div>
                     <div className="reactorActions">
                         <Button className="reactorShutdownBtn" onClick={activateToggleCoolant}></Button>
-                        <Typography>Toggle Coolant</Typography>
+                        <Typography sx={{marginLeft: "10px"}}>Toggle Coolant</Typography>
                     </div>
                     <div className="reactorActions">
                         <Button className="reactorShutdownBtn" onClick={activateStartReactor}></Button>
-                        <Typography>Start Reactor</Typography>
+                        <Typography sx={{marginLeft: "10px"}}>Start Reactor</Typography>
                     </div>
                 </section>
                 <section>
