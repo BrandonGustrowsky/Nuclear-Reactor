@@ -9,7 +9,8 @@
     --off-blue: rgb(94, 119, 142);
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
 }
@@ -22,7 +23,7 @@ body {
     border-radius: 10px;
 }
 
-div > .titleContainer {
+div>.titleContainer {
     width: 300px;
     height: 85px;
     box-shadow: var(--light-box-shadow);
@@ -32,7 +33,7 @@ div > .titleContainer {
     border-radius: 8px;
 }
 
-div > .titleContainer > .titleReadOnly {
+div>.titleContainer>.titleReadOnly {
     font-size: 20px;
     text-align: center;
     line-height: 75px;
@@ -40,7 +41,7 @@ div > .titleContainer > .titleReadOnly {
     color: var(--white);
 }
 
-div > .titleContainer > .titleInput {
+div>.titleContainer>.titleInput {
     display: flex;
     background: var(--white);
     height: 60px;
@@ -53,23 +54,23 @@ div > .titleContainer > .titleInput {
     gap: 0;
 }
 
-.panel > * {
+.panel>* {
     width: 33.33333%;
     height: 350px;
 }
 
-.panel > *:nth-child(1) {
+.panel>*:nth-child(1) {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.panel > *:nth-child(1) > *:nth-child(1) > * {
+.panel>*:nth-child(1)>*:nth-child(1)>* {
     text-overflow: ellipsis;
     text-align: center;
 }
 
-.panel > *:nth-child(2) {
+.panel>*:nth-child(2) {
     background: var(--orange);
     display: flex;
     flex-wrap: wrap;
@@ -80,16 +81,16 @@ div > .titleContainer > .titleInput {
     -ms-overflow-style: none;
 }
 
-.panel > *:nth-child(2)::-webkit-scrollbar {
+.panel>*:nth-child(2)::-webkit-scrollbar {
     display: none;
 }
 
-.panel > *:nth-child(2) > * {
+.panel>*:nth-child(2)>* {
     width: 45%;
     margin-top: 2%;
 }
 
-.panel > *:nth-child(3) {
+.panel>*:nth-child(3) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -107,7 +108,7 @@ div > .titleContainer > .titleInput {
     align-items: center;
 }
 
-.controlBoard > .controlBoardBtnBlue {
+.controlBoard>.controlBoardBtnBlue {
     background: var(--dark-blue);
     color: var(--white);
     outline: 2px solid var(--white);
@@ -116,13 +117,13 @@ div > .titleContainer > .titleInput {
     text-overflow: ellipsis;
 }
 
-.controlBoard > .controlBoardBtnBlue:hover {
+.controlBoard>.controlBoardBtnBlue:hover {
     background: var(--white);
     color: var(--dark-blue);
     outline: 2px solid var(--dark-blue);
 }
 
-.controlBoard > .controlBoardBtnOrange {
+.controlBoard>.controlBoardBtnOrange {
     background: var(--orange);
     color: var(--dark-blue);
     outline: 2px solid var(--dark-blue);
@@ -130,7 +131,7 @@ div > .titleContainer > .titleInput {
     text-overflow: ellipsis;
 }
 
-.controlBoard > .controlBoardBtnOrange:hover {
+.controlBoard>.controlBoardBtnOrange:hover {
     background: var(--dark-blue);
     color: var(--orange);
     outline: 2px solid var(--orange);
@@ -143,12 +144,12 @@ div > .titleContainer > .titleInput {
     bottom: 70px;
 }
 
-.toggleButtons > .toggleSwitch {
+.toggleButtons>.toggleSwitch {
     transform: rotateZ(270deg);
     color: var(--dark-blue);
 }
 
-.reactorTileContainer > .reactorTileChild{
+.reactorTileContainer>.reactorTileChild {
     background: var(--dark-blue);
     color: var(--white);
     display: flex;
@@ -157,7 +158,7 @@ div > .titleContainer > .titleInput {
     transition: 0.5s ease-out;
 }
 
-.reactorTileContainer > .reactorTileChild:hover {
+.reactorTileContainer>.reactorTileChild:hover {
     background: var(--light-blue);
     color: var(--dark-blue);
     outline: 2px solid var(--dark-blue);
@@ -210,9 +211,16 @@ div > .titleContainer > .titleInput {
     justify-content: center;
 }
 
-.reactorActions > .reactorShutdownBtn:hover {
+#reactorActionsContainer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.reactorActions>.reactorShutdownBtn:hover {
     background: radial-gradient(ellipse at top, var(--light-blue), transparent),
-    radial-gradient(ellipse at bottom, var(--orange), transparent);
+        radial-gradient(ellipse at bottom, var(--orange), transparent);
     outline: 1px solid var(--dark-blue);
 }
 
@@ -221,9 +229,9 @@ div > .titleContainer > .titleInput {
     text-align: center;
 }
 
-.reactorActions > .reactorShutdownBtn {
+.reactorActions>.reactorShutdownBtn {
     background: radial-gradient(ellipse at top, var(--orange), transparent),
-    radial-gradient(ellipse at bottom, var(--dark-blue), transparent);
+        radial-gradient(ellipse at bottom, var(--dark-blue), transparent);
     outline: 1px solid var(--white);
     border-radius: 100%;
     height: 70px;
@@ -235,9 +243,10 @@ div > .titleContainer > .titleInput {
 .rodStateContainer {
     display: flex;
     gap: 25px;
+    margin-top: 10px;
 }
 
-.rodStateContainer > .changeRodsBtn {
+.rodStateContainer>.changeRodsBtn {
     background: var(--orange);
     color: var(--dark-blue);
     outline: 2px solid var(--dark-blue);
@@ -247,20 +256,20 @@ div > .titleContainer > .titleInput {
     margin-top: -5px;
 }
 
-.rodStateContainer > .changeRodsBtn:hover {
+.rodStateContainer>.changeRodsBtn:hover {
     background: var(--dark-blue);
     outline: 2px solid var(--orange);
     color: var(--white);
 }
 
 @media screen and (max-width: 1050px) {
-    .panel > *:nth-child(2) > * {
+    .panel>*:nth-child(2)>* {
         flex-direction: column;
         flex-wrap: nowrap;
         align-items: center;
     }
 
-    .panel > *:nth-child(2) > * {
+    .panel>*:nth-child(2)>* {
         width: 90%;
     }
 }
@@ -270,14 +279,25 @@ div > .titleContainer > .titleInput {
         flex-direction: column;
         align-items: center;
     }
-    .panel > * {
+
+    .panel>* {
         width: 100%;
     }
+
     .controlBoard {
         grid-template-rows: 1fr;
     }
+
     .toggleButtons {
         justify-content: space-between;
         margin: 0 -10px;
+    }
+
+    #reactorActionsContainer {
+        display: grid;
+        grid-template-columns: repeat(2, 0.2fr);
+        gap: 90px;
+        justify-content: center;
+        align-items: center;
     }
 }

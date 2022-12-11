@@ -53,24 +53,32 @@ const Reactor = () => {
 
     // Call this function when the user tries to drop a rod in the reactor
     const activateDropRod = async () => {
-        const dropRod = await fetch(BASE_URL + "/drop-rod/" + id + "" + apiKeyLink, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            }
-        })
+        if (data.reactorState === "Active") {
+            const dropRod = await fetch(BASE_URL + "/drop-rod/" + id + "" + apiKeyLink, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            })
+        } else {
+            enqueueSnackbar("Reactor must be active")
+        }
     }
 
     // Call this function when the user tries to raise a rod in the reactor
     const activateRaiseRod = async () => {
-        const raiseRod = await fetch(BASE_URL + "/raise-rod/" + id + "" + apiKeyLink, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            }
-        })
+        if (data.reactorState === "Active") {
+            const raiseRod = await fetch(BASE_URL + "/raise-rod/" + id + "" + apiKeyLink, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                }
+            })
+        } else {
+            enqueueSnackbar("Reactor must be active")
+        }
     }
 
     // Call this function when the user attempts to put the reactor into maintenance mode
@@ -214,7 +222,7 @@ const Reactor = () => {
                 }}><CloseIcon id="closeBtn" /></Button>
             </header>
             <main id="reactorMainContent">
-                <Typography variant="h1" style={{ fontSize: "25px" }}>Reactor State: <span style={{fontWeight: "600"}}>{data.reactorState}</span></Typography>
+                <Typography variant="h1" style={{ fontSize: "25px" }}>Reactor State: <span style={{ fontWeight: "600" }}>{data.reactorState}</span></Typography>
                 <Typography variant="h2" style={{ fontSize: "25px" }}>Coolant: {data.coolant}</Typography>
                 <section>
                     <div className="rodStateContainer">
@@ -226,9 +234,13 @@ const Reactor = () => {
                         <Button className="changeRodsBtn" onClick={activateRaiseRod}>Increase # Out</Button>
                     </div>
                 </section>
+                <div id="graphContainer">
+                    <Typography variant="h3" style={{ fontSize: "25px", textAlign: "center" }}>Current Temperature: {Number(data.tempAmount).toFixed(2)} ˚{data.tempUnit === "celsius" ? "C" : "F"}</Typography>
+                    <Graph data={data} width="200px" height="250px" temperature={data.tempAmount} pollingRate={pollingRate} />
+                </div>
                 <Typography>Level: {data.tempStatus}</Typography>
                 <Typography>Output: {data.outputAmount} {data.outputUnit} </Typography>
-                <section style={{ display: "flex", justifyContent: "space-between", width: "90%" }}>
+                <section id="reactorActionsContainer">
                     <div className="reactorActions">
                         <Button className="reactorShutdownBtn" onClick={activateEmergencyShutdown}></Button>
                         <Typography>Emergency Shutdown</Typography>
@@ -251,12 +263,6 @@ const Reactor = () => {
                     </div>
                 </section>
                 <section>
-                    <Paper elevation={5}>
-                        <div id="graphContainer">
-                            <Typography variant="h3" style={{fontSize: "25px", textAlign: "center"}}>Current Temperature: {Number(data.tempAmount).toFixed(2)} ˚{data.tempUnit === "celcius" ? "C" : "F"}</Typography>
-                            <Graph data={data} width="200px" height="250px" temperature={data.tempAmount} pollingRate={pollingRate} />
-                        </div>
-                    </Paper>
                 </section>
             </main>
         </div>
