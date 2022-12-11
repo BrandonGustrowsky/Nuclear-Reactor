@@ -149,6 +149,10 @@ div>.titleContainer>.titleInput {
     color: var(--dark-blue);
 }
 
+.reactorTileContainer {
+    background: transparent;
+}
+
 .reactorTileContainer>.reactorTileChild {
     background: var(--dark-blue);
     color: var(--white);
@@ -156,6 +160,8 @@ div>.titleContainer>.titleInput {
     flex-direction: column;
     align-items: center;
     transition: 0.5s ease-out;
+    height: 120px;
+    max-height: max-content;
 }
 
 .reactorTileContainer>.reactorTileChild:hover {
@@ -280,12 +286,16 @@ div>.titleContainer>.titleInput {
         align-items: center;
     }
 
-    .panel>* {
+    .panel > * {
         width: 100%;
     }
 
     .controlBoard {
         grid-template-rows: 1fr;
+    }
+
+    .controlBoard > * {
+        width: 100px;
     }
 
     .toggleButtons {

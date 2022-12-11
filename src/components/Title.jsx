@@ -12,7 +12,7 @@ const Title = (props) => {
         const { value } = event.target
         console.log(value)
         try {
-            const response = await fetch(url.BASE_URL + "/plant-name" + url.apiKeyLink, {
+            const response = await fetch(url.BASE_URL + "" + url.endpoint + "" + url.apiKeyLink, {
                 method: "PUT",
                 headers: {
                     'Content-Type': "application/json",

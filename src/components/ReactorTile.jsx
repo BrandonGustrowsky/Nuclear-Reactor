@@ -8,13 +8,13 @@ const ReactorTile = (props) => {
     const navigate = useNavigate()
 
     return (
-        <div className="reactorTileContainer" style={{background: "transparent"}} onClick={() => {
+        <div className="reactorTileContainer" onClick={() => {
             console.log("called!")
             navigate(`/reactor/${id}`)
         }}>
-            <Paper className="reactorTileChild" elevation={7}>
-                <Typography style={{fontSize: "35px", lineHeight: "140px"}}> { name } </Typography>
-                <Typography> { tempAmount.toFixed(2) } ˚{ tempUnit == "celsius" ? "C" : "F" } </Typography>
+            <Paper className="reactorTileChild" elevation={7} sx={{position: "relative"}}>
+                <Typography sx={{fontSize: "25px", textAlign: "center", wordWrap: "wrap"}}> { name } </Typography>
+                <Typography sx={{position: "absolute", bottom: "0px"}}> { tempAmount.toFixed(2) } ˚{ tempUnit == "celsius" ? "C" : "F" } </Typography>
             </Paper>
         </div>
     )
