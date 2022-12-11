@@ -49,12 +49,6 @@ const Dashboard = (props) => {
                 const text = await response.text()
                 enqueueSnackbar(text)
             }
-            
-            // if (response.status === 201) {
-            //     enqueueSnackbar(`Emergency shutdown on ${reactor.name} was successful`)
-            // } else {
-            //     enqueueSnackbar(`Ooops! ${reactor.name} could not be emergency shutdown`)
-            // }
             return reactor
         })
     }
@@ -100,7 +94,6 @@ const Dashboard = (props) => {
         } else {
             enqueueSnackbar("Both safety levers must be turned on to perform a global reset!")
         }
-        
     }
 
     let temperatureUnit = "F"

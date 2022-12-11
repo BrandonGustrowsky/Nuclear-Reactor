@@ -19,27 +19,36 @@ const navigate = useNavigate()
 
 // Call this function when the user clicks the "Emergency Shutdown" button
 const activateEmergencyShutdown = async () => {
-    console.log(id)
-    const shutdown = await fetch(BASE_URL + "/emergency-shutdown/" + id + "" + apiKeyLink, {
+    const response = await fetch(BASE_URL + "/emergency-shutdown/" + id + "" + apiKeyLink, {
         method: "POST",
         headers: {
             'Content-Type': "application/json",
             'Accept': "application/json",
         },
     })
-    (shutdown.status == 201 && enqueueSnackbar("Emergency shutdown complete"))
-    (shutdown.status == 400 && enqueueSnackbar("Emergency shutdown failed for some reason"))
+    if (response.status === 201) {
+        enqueueSnackbar("Emergency shutdown complete")
+    } else {
+        const text = await response.text()
+        enqueueSnackbar(text)
+    }
 }   
 
 // Call this function when the user clicks the "Controlled Shutdown" button
 const activateControlledShutdown = async () => {
-    const shutdown = await fetch(BASE_URL + "/controlled-shutdown/" + id + "" + apiKeyLink, {
+    const response = await fetch(BASE_URL + "/controlled-shutdown/" + id + "" + apiKeyLink, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
     })
+    if (response.status === 201 || response.status === 304) {
+        enqueueSnackbar(`${data.reactorName} was successfully shut down`)
+    } else {
+        const text = await response.text()
+        enqueueSnackbar(text)
+    }
 }
 
 // Call this function when the user tries to drop a rod in the reactor
@@ -66,56 +75,68 @@ const activateRaiseRod = async () => {
 
 // Call this function when the user attempts to put the reactor into maintenance mode
 const activateMaintenance = async () => {
-    const maintenance = await fetch(BASE_URL + "/maintenance/" + id + "" + apiKeyLink, {
+    const response = await fetch(BASE_URL + "/maintenance/" + id + "" + apiKeyLink, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
     })
+
+    const text = await response.text()
 }
 
 // Call this function when the user attempts to refuel the reactor
 const activateRefuel = async () => {
-    const refuel = await fetch(BASE_URL + "/refuel/" + id + "" + apiKeyLink, {
+    activateMaintenance()
+    console.log(BASE_URL + "/refuel/" + id + "" + apiKeyLink)
+    const response = await fetch(BASE_URL + "/refuel/" + id + "" + apiKeyLink, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
     })
-}
-
-// Call this function when the user attempts to change the coolant for the reactor
-const activateToggleCoolant = async () => {
-    const rawCoolant = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink)
-    const jsonCoolant = await rawCoolant.json()
-    const coolant = jsonCoolant.coolant
-    console.log("passed queue")
-    const newCoolant = (coolant === "on" ? "off" : "on")
-    const response = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        },
-        body: JSON.stringify({
-            coolant: newCoolant,
-        }),
-    })
     if (response.status === 201 || response.status === 304) {
-        enqueueSnackbar(`The coolant has been toggled ${jsonCoolant.coolant}`)
+        enqueueSnackbar(`${data.reactorName} has been successfully refueled`)
     } else {
-        const text = response.text()
+        const text = await response.text()
         enqueueSnackbar(text)
     }
 }
 
+// Call this function when the user attempts to change the coolant for the reactor
+const activateToggleCoolant = async () => {
+    if (data.reactorState === "Active") {
+        const rawCoolant = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink)
+        const jsonCoolant = await rawCoolant.json()
+        const coolant = jsonCoolant.coolant
+        const newCoolant = (coolant === "on" ? "off" : "on")
+        const response = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            body: JSON.stringify({
+                coolant: newCoolant,
+            }),
+        })
+        if (response.status === 201 || response.status === 304) {
+            enqueueSnackbar(`The coolant has been toggled ${jsonCoolant.coolant}`)
+        } else {
+            const text = response.text()
+            enqueueSnackbar(text)
+        }
+    } else {
+        enqueueSnackbar("Reactor must be started to modify coolant state")
+    }
+    
+}
+
 // Call this function when the user attempts to start the reactor
 const activateStartReactor = async () => {
-    activateMaintenance()
     activateRefuel()
-
     const response = await fetch(BASE_URL + "/start-reactor/" + id + "" + apiKeyLink, {
         method: "POST",
         headers: {
@@ -124,7 +145,7 @@ const activateStartReactor = async () => {
         },
     })
     if (response.status === 201 || response.status === 304) {
-        enqueueSnackbar(`${reactor.name} has been started!`)
+        enqueueSnackbar(`${data.reactorName} has been started!`)
     } else {
         const text = await response.text()
         enqueueSnackbar(text)
@@ -138,7 +159,6 @@ const buildReactor = async () => {
     const theReactorAsArray = jsonRawReactorArray.reactors.filter((reactor) => {
         return reactor.id === id
     })
-    console.log(theReactorAsArray[0])
 
     // Get temperature data
     const rawTemperature = await fetch(BASE_URL + "/temperature/" + id + "" + apiKeyLink)
