@@ -196,7 +196,7 @@ div > .titleContainer > .titleInput {
 #reactorMainContent {
     background: var(--off-blue);
     width: 70%;
-    height: 600px;
+    height: max-content;
     border-radius: 4%;
     display: flex;
     flex-direction: column;
@@ -230,6 +230,27 @@ div > .titleContainer > .titleInput {
     width: 75px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 50px 15px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     transition: ease-in 0.6s;
+}
+
+.rodStateContainer {
+    display: flex;
+    gap: 25px;
+}
+
+.rodStateContainer > .changeRodsBtn {
+    background: var(--orange);
+    color: var(--dark-blue);
+    outline: 2px solid var(--dark-blue);
+    height: max-content;
+    text-overflow: ellipsis;
+    transition: 0.6s ease-out;
+    margin-top: -5px;
+}
+
+.rodStateContainer > .changeRodsBtn:hover {
+    background: var(--dark-blue);
+    outline: 2px solid var(--orange);
+    color: var(--white);
 }
 
 @media screen and (max-width: 1050px) {

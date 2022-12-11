@@ -12,7 +12,6 @@ const Graph = (props) => {
 useEffect(() => {
   setTemperatures((prevTemperatures) => {
     return [...prevTemperatures, temperature].splice(-(60000*5/pollingRate))
-    // 60000*5/pollingRate
   })
 
   const ctx = canvasRef.current

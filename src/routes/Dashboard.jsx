@@ -49,20 +49,30 @@ const Dashboard = (props) => {
                 const text = await response.text()
                 enqueueSnackbar(text)
             }
-            
-            // if (response.status === 201) {
-            //     enqueueSnackbar(`Emergency shutdown on ${reactor.name} was successful`)
-            // } else {
-            //     enqueueSnackbar(`Ooops! ${reactor.name} could not be emergency shutdown`)
-            // }
             return reactor
         })
     }
 
-    const toggleCoolantActivation = () => {
-        data.reactors.map(async () => {
-            const toggleCoolant = await fetch(url.BASE_URL + "/")
+    const toggleCoolantActivation = (state) => {
+        data.reactors.map(async (reactor) => {
+            const response = await fetch(url.BASE_URL + "/coolant/" + reactor.id + "" + url.apiKeyLink, {
+                method: "POST",
+                headers: {
+                    "Accept" : "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    coolant: state
+                })
+            })
+            if (response.status === 201 || response.status === 304) {
+                enqueueSnackbar(`${reactor.name}'s coolant is ${state}`)
+            } else {
+                const text = await response.text()
+                enqueueSnackbar(text)
+            }
         })
+        
     }
 
     const activateReset = async () => {
@@ -84,7 +94,6 @@ const Dashboard = (props) => {
         } else {
             enqueueSnackbar("Both safety levers must be turned on to perform a global reset!")
         }
-        
     }
 
     let temperatureUnit = "F"
@@ -147,7 +156,8 @@ const Dashboard = (props) => {
             <section className="controlBoard">
                 <Button className="controlBoardBtnOrange" onClick={activateEmergencyShutdown}>Emergency Shutdown</Button>
                 <Button className="controlBoardBtnBlue" onClick={activateControlledShutdown}>Controlled Shutdown</Button>
-                <Button className="controlBoardBtnBlue" onClick={toggleCoolantActivation}>Enable/Disable Coolant</Button>
+                <Button className="controlBoardBtnBlue" onClick={() => {toggleCoolantActivation("on")}}>Enable Coolant</Button>
+                <Button className="controlBoardBtnBlue" onClick={() => {toggleCoolantActivation("off")}}>Disable Coolant</Button>
                 <Button className="controlBoardBtnOrange" onClick={activateReset}>RESET</Button>
             </section>
             <div className="toggleButtons">
