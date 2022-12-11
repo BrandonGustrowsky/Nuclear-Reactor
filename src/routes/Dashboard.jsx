@@ -147,8 +147,8 @@ const Dashboard = (props) => {
                 <Paper elevation={5}>
                     <Typography style={{ fontSize: "25px" }}>System Logs</Typography>
                     <Paper id="logsContainer">
-                    {msgs.map((msg) => {
-                        return <p style={{lineHeight: "20px"}}>{msg}</p>
+                    {msgs.map((msg, index) => {
+                        return <p key={index} style={{lineHeight: "20px"}}>{msg}</p>
                     })}
                     </Paper>
                 </Paper>
