@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 
 const App = () => {
+  const pollingRate = 150
   // API KEY: 21a518c670a84119
   const BASE_URL = "https://nuclear.dacoder.io/reactors"
   const apiKey = "21a518c670a84119"
@@ -92,7 +93,7 @@ const App = () => {
     setIsLoading(false)
   }
   useEffect(() => {
-    const id = setInterval(getData, 150) //On mount
+    const id = setInterval(getData, pollingRate) //On mount
     return () => { clearInterval(id) }  //On component dismount
   }, [])
 
@@ -100,7 +101,7 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         {/* Get the plant naming function through as a prop */}
-        <Dashboard data={data} logs={logs} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} setLogs={setLogs} />
+        <Dashboard data={data} logs={logs} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }} setData={setData} setLogs={setLogs} pollingRate={pollingRate}/>
 
       </ThemeProvider>
 

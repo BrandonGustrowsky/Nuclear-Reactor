@@ -4,23 +4,17 @@ import { useRef, useEffect, useState } from 'react'
 import { Chart } from "chart.js/auto"
 
 const Graph = (props) => {
-  const { data, width, height } = props
+
+  const { data, width, height, temperature, pollingRate } = props
   const canvasRef = useRef(null)
   const [temperatures, setTemperatures] = useState([])
 
-  const calculateAverageTemperature = () => {
-    const averageTemp = data.reduce((accumulator, reactor) => {
-      accumulator += reactor.tempAmount
-      return accumulator
-    }, 0) / data.length
-
-    setTemperatures((prevTemperatures) => {
-      return [...prevTemperatures, averageTemp]
-    })
-  }
-
 useEffect(() => {
-  calculateAverageTemperature()
+  setTemperatures((prevTemperatures) => {
+    return [...prevTemperatures, temperature].splice(-(60000*5/pollingRate))
+    // 60000*5/pollingRate
+  })
+
   const ctx = canvasRef.current
   const chartData = new Chart(ctx, {
   type: 'line', 

@@ -10,8 +10,11 @@ import { useState } from "react"
 import { useSnackbar } from 'notistack';
 import Graph from "../components/Graph"
 
+
 const Dashboard = (props) => {
-    const { data, logs, url, setData, setLogs } = props
+
+
+    const { data, logs, url, setData, setLogs, pollingRate } = props
     const [leftToggle, setLeftToggle] = useState(false)
     const [rightToggle, setRightToggle] = useState(false)
     const { enqueueSnackbar, closeSnackbar } = useSnackbar()
@@ -22,7 +25,7 @@ const Dashboard = (props) => {
                 method: "POST",
             })
             if (response.status === 201) {
-                enqueueSnackbar(`${reactor.name} was successfully shut down.`)
+                enqueueSnackbar("Controlled shutdown was successful!")
             } else {
                 const text = await response.text()
                 enqueueSnackbar(text)
@@ -46,32 +49,19 @@ const Dashboard = (props) => {
                 const text = await response.text()
                 enqueueSnackbar(text)
             }
+            
+            // if (response.status === 201) {
+            //     enqueueSnackbar(`Emergency shutdown on ${reactor.name} was successful`)
+            // } else {
+            //     enqueueSnackbar(`Ooops! ${reactor.name} could not be emergency shutdown`)
+            // }
             return reactor
         })
     }
 
-    const toggleCoolantActivation = (state) => {
-        // https://nuclear.dacoder.io/reactors/coolant/0541c510-3703-41fe-b4f8-31c8087ddb55?apiKey=21a518c670a84119
-        // https://nuclear.dacoder.io/reactors/coolant/1b1efccd-6526-41fd-8815-d0e0a99a94f0?apiKey=21a518c670a84119
-        data.reactors.map(async (reactor) => {
-            console.log("URL FOR COOLANT ==>   " + url.BASE_URL + "/coolant/" + reactor.id + "" + url.apiKeyLink)
-            const response = await fetch(url.BASE_URL + "/coolant/" + reactor.id + "" + url.apiKeyLink, {
-                method: "POST",
-                // mode: "CORS",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-                body: JSON.stringify({
-                    coolant: state,
-                }),
-            });
-            if (response.status === 201 || response.status === 304) {
-                enqueueSnackbar(`${reactor.name}'s coolant is ${state}.`)
-            } else {
-                const text = await response.text()
-                enqueueSnackbar(text)
-            }
+    const toggleCoolantActivation = () => {
+        data.reactors.map(async () => {
+            const toggleCoolant = await fetch(url.BASE_URL + "/")
         })
     }
 
@@ -135,7 +125,7 @@ const Dashboard = (props) => {
                 <Paper elevation={5}>
                     <div>
                         <Typography style={{ fontSize: "25px" }}>Average Temperature</Typography>
-                        <Graph data={data.reactors} width="500px" height="200px"/>
+                        <Graph data={data.reactors} width="500px" height="200px" temperature={calculateAverageTemperature()} pollingRate={pollingRate}/>
                         <Typography style={{fontSize: "20px"}}>Current Avg. Temp: {calculateAverageTemperature()} {temperatureUnit}</Typography>
                         <Typography style={{fontSize: "20px"}}>{calculateTotalOutput()} {outputUnit} output</Typography>
                     </div>
@@ -157,8 +147,7 @@ const Dashboard = (props) => {
             <section className="controlBoard">
                 <Button className="controlBoardBtnOrange" onClick={activateEmergencyShutdown}>Emergency Shutdown</Button>
                 <Button className="controlBoardBtnBlue" onClick={activateControlledShutdown}>Controlled Shutdown</Button>
-                <Button className="controlBoardBtnBlue" onClick={() => {toggleCoolantActivation("on")}}>Enable Coolant</Button>
-                <Button className="controlBoardBtnBlue" onClick={() => {toggleCoolantActivation("off")}}>Disable Coolant</Button>
+                <Button className="controlBoardBtnBlue" onClick={toggleCoolantActivation}>Enable/Disable Coolant</Button>
                 <Button className="controlBoardBtnOrange" onClick={activateReset}>RESET</Button>
             </section>
             <div className="toggleButtons">
@@ -175,6 +164,7 @@ const Dashboard = (props) => {
             </div>
         </>
     )
+
 }
 
 export default Dashboard
