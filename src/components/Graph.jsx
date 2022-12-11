@@ -49,7 +49,6 @@ return (
   </canvas>
   <script src="chart.js"></script>
   </>
- 
 )
 }
 
