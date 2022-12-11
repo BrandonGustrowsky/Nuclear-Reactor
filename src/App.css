@@ -335,4 +335,8 @@ div>.titleContainer>.titleInput {
         justify-content: center;
         align-items: center;
     }
+
+    #reactorMainContent {
+        width: 100%;
+    }
 }
