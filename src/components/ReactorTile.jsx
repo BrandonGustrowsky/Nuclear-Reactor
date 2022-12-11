@@ -6,6 +6,7 @@ const ReactorTile = (props) => {
     const { url } = props.url
     const { id, name, tempAmount, tempUnit } = props.reactor
     const navigate = useNavigate()
+    
 
     return (
         <div className="reactorTileContainer" onClick={() => {

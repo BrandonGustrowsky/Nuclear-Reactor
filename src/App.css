@@ -23,6 +23,18 @@ body {
     border-radius: 10px;
 }
 
+#editTitle {
+    color: var(--white);
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+}
+
+#editTitle:hover {
+    cursor: pointer;
+
+}
+
 div>.titleContainer {
     width: 300px;
     height: 85px;
@@ -33,12 +45,14 @@ div>.titleContainer {
     border-radius: 8px;
 }
 
-div>.titleContainer>.titleReadOnly {
-    font-size: 20px;
+div>.titleContainer> div>.titleReadOnly {
+    margin: 25px 10px 0 10px;
+    margin-top: 10px;
     text-align: center;
-    line-height: 75px;
+    line-height: 35px;
     background: transparent;
     color: var(--white);
+    font-size: 35px;
 }
 
 div>.titleContainer>.titleInput {
