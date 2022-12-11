@@ -14,7 +14,7 @@ const Reactor = () => {
     const apiKey = "21a518c670a84119"
     const apiKeyLink = "?apiKey=" + apiKey
     const { id } = useParams("id")
-    const url = { BASE_URL: BASE_URL, apiKeyLink: apiKeyLink }
+    const url = { BASE_URL: BASE_URL, apiKeyLink: apiKeyLink, endpoint: `/set-reactor-name/${id}` }
     const navigate = useNavigate()
 
     // Call this function when the user clicks the "Emergency Shutdown" button
