@@ -3,8 +3,7 @@ Bryan Mauricio
 CPTR-456 Advanced Web Programming
 11 December 2022
 
-Last Edit Done by name_here at time:here:
-
+Last Edit Done by Brandon at 2:55:35.73pm. Commit message: Final changes to project, formatting code, adding peer evaluations, and last minute styling
 
 List of Dependencies:
 React - React (duh)
