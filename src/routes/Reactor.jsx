@@ -90,17 +90,18 @@ const activateRefuel = async () => {
 const activateToggleCoolant = async () => {
     const rawCoolant = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink)
     const jsonCoolant = await rawCoolant.json()
-    const coolant = jsonCoolant.coolant.stringify()
+    const coolant = jsonCoolant.coolant
     console.log("passed queue")
+    const newCoolant = (coolant === "on" ? "off" : "on")
     const response = await fetch(BASE_URL + "/coolant/" + id + "" + apiKeyLink, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
         },
-        body: {
-            coolant: (coolant === "on" ? "off" : "on"),
-        },
+        body: JSON.stringify({
+            coolant: newCoolant,
+        }),
     })
     if (response.status === 201 || response.status === 304) {
         enqueueSnackbar(`The coolant has been toggled ${jsonCoolant.coolant}`)
@@ -122,15 +123,23 @@ const activateStartReactor = async () => {
             'Accept': "application/json",
         },
     })
-    if (response.status === 201) {
+    if (response.status === 201 || response.status === 304) {
         enqueueSnackbar(`${reactor.name} has been started!`)
     } else {
-        const text = response.text()
+        const text = await response.text()
         enqueueSnackbar(text)
     }
 }
 
 const buildReactor = async () => {
+    //Get reactor name
+    const rawReactorArray = await fetch(`${BASE_URL}${apiKeyLink}`)
+    const jsonRawReactorArray = await rawReactorArray.json()
+    const theReactorAsArray = jsonRawReactorArray.reactors.filter((reactor) => {
+        return reactor.id === id
+    })
+    console.log(theReactorAsArray[0])
+
     // Get temperature data
     const rawTemperature = await fetch(BASE_URL + "/temperature/" + id + "" + apiKeyLink)
     const jsonTemperature = await rawTemperature.json()
@@ -156,6 +165,7 @@ const buildReactor = async () => {
     const jsonRodState = await rawRodState.json()
 
     setData({
+        reactorName: theReactorAsArray[0].name,
         tempAmount: jsonTemperature.temperature.amount,
         tempUnit: jsonTemperature.temperature.unit,
         tempStatus: jsonTemperature.temperature.status,
@@ -177,7 +187,7 @@ useEffect(() => {
 return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <header>
-            <Title url={url} name={"Reactor 1"} setData={setData} />
+            <Title url={url} name={data.reactorName} setData={setData} />
             <Button variant="text" style={{ position: "absolute", right: "0", top: "25px" }} onClick={() => {
                 navigate("/")
             }}><CloseIcon id="closeBtn" /></Button>
