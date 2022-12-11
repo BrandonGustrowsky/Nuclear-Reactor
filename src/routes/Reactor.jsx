@@ -208,10 +208,54 @@ const Reactor = () => {
         })
     }
 
+    const onEnterDown = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            //call submit function here
+            handleSubmit(event);
+            console.log('Enter KEY was pressed')
+            }
+        }
+    
+    
     useEffect(() => {
         const id = setInterval(buildReactor, pollingRate) //On mount
         return () => { clearInterval(id) }  //On component dismount
     }, [])
+
+    const [first, setFirst] = useState('');
+    const [last, setLast] = useState('');
+
+    const handleSubmit = (event) => {
+        
+        console.log('form submitted');
+
+        if (!parseInt(event.target.value)) {
+            enqueueSnackbar("Input must be an integer")
+        }
+        for (let i = 0; i < parseInt(event.target.value); ++i){
+            console.log("In for loop")
+            if (event.target.name == "removeRod"){
+                activateRaiseRod();
+            }
+            if (event.target.name == "dropRod"){
+                activateDropRod();
+            }
+            }
+        event.target.value = ''
+        }
+    useEffect(() => {
+        const keyDownHandler = event => {
+        console.log('User pressed: ', event.key);
+        
+    };
+    document.addEventListener('keydown', keyDownHandler);
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
+
 
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -227,11 +271,11 @@ const Reactor = () => {
                 <section>
                     <div className="rodStateContainer">
                         <Typography>Rod State: In: {data.rodStateIn}</Typography>
-                        <Button className="changeRodsBtn" onClick={activateDropRod}>Increase # In</Button>
+                        <input type="text" id="first" name="dropRod" onChange={event => setFirst(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
                     </div>
                     <div className="rodStateContainer">
                         <Typography>Rod State: Out: {data.rodStateOut}</Typography>
-                        <Button className="changeRodsBtn" onClick={activateRaiseRod}>Increase # Out</Button>
+                        <input type="text" id="last" name="removeRod" onChange={event => setLast(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
                     </div>
                 </section>
                 <div id="graphContainer">
