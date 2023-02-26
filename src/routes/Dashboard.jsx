@@ -133,18 +133,23 @@ const Dashboard = (props) => {
             <section className="panel">
                 <Paper elevation={5}>
                     <div>
-                        <Typography style={{ fontSize: "25px" }}>Average Temperature</Typography>
-                        <Graph data={data.reactors} width="500px" height="200px" temperature={calculateAverageTemperature()} pollingRate={pollingRate}/>
+                        <Typography style={{ fontSize: "35px" }}>Average Temperature</Typography>
+                        <Graph data={data.reactors} width="550px" height="145px" temperature={calculateAverageTemperature()} pollingRate={pollingRate}/>
                         <Typography style={{fontSize: "20px"}}>Current Avg. Temp: {calculateAverageTemperature()} {temperatureUnit}</Typography>
                         <Typography style={{fontSize: "20px"}}>{calculateTotalOutput()} {outputUnit} output</Typography>
                     </div>
                 </Paper>
                 <Paper elevation={5}>
+                <Typography variant="p" sx={{fontSize: "30px", textAlign: "center"}}>Reactors</Typography>
+                <hr style={{borderWidth: "1px", width: "90%", color: "#FF6663", background: "#FF6663",}} />
                     {data.reactors && data.reactors.map((reactor, index) => {
-                        return <ReactorTile key={index} reactor={reactor} url={url} />
+                        return (
+                            <ReactorTile key={index} reactor={reactor} url={url} />
+                        )
                     })}
                 </Paper>
-                <Paper elevation={5}>
+            </section>
+            <Paper elevation={5}>
                     <Typography style={{ fontSize: "25px" }}>System Logs</Typography>
                     <Paper id="logsContainer">
                     {msgs.map((msg, index) => {
@@ -152,7 +157,6 @@ const Dashboard = (props) => {
                     })}
                     </Paper>
                 </Paper>
-            </section>
             <section className="controlBoard">
                 <Button className="controlBoardBtnOrange" onClick={activateEmergencyShutdown}>Emergency Shutdown</Button>
                 <Button className="controlBoardBtnBlue" onClick={activateControlledShutdown}>Controlled Shutdown</Button>

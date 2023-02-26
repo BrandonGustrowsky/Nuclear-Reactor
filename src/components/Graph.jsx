@@ -1,5 +1,3 @@
-import Title from "./Title"
-import ReactorTile from "./ReactorTile"
 import { useRef, useEffect, useState } from 'react'
 import { Chart } from "chart.js/auto"
 
@@ -24,8 +22,8 @@ useEffect(() => {
       label: 'Average Reactor Temperature',
       data: temperatures,
       fill: true,
-      borderColor: 'rgb(75, 192, 192)',
-      
+      pointRadius: 0,
+      borderColor: "#FF6663",
       tension: 0.1
     }]
   },
@@ -45,7 +43,7 @@ useEffect(() => {
 
 return (
   <>
-   <canvas ref={canvasRef}>
+   <canvas ref={canvasRef} style={{width, height}}>
   </canvas>
   <script src="chart.js"></script>
   </>

@@ -26,9 +26,9 @@ const App = () => {
       primary: {
         main: "#0B3954" //dark blue
       },
-      secondary: {
-        main: "#BFD7EA" //light blue
-      },
+      // secondary: {
+      //   main: "#BFD7EA" //light blue
+      // },
       orange: {
         main: "#FF6663", //orange
       },
@@ -72,9 +72,27 @@ const App = () => {
         const rawTemp = await fetch(BASE_URL + "/temperature/" + reactor.id + "" + apiKeyLink)
         const jsonTemp = await rawTemp.json()
 
+        // Get coolant data
+        const rawCoolant = await fetch(BASE_URL + "/coolant/" + reactor.id + "" + apiKeyLink)
+        const jsonCoolant = await rawCoolant.json()
+
         // Get output data
         const rawOutput = await fetch(BASE_URL + "/output/" + reactor.id + "" + apiKeyLink)
         const jsonOutput = await rawOutput.json()
+
+        // Get fuel level data
+        const rawFuelLevel = await fetch(BASE_URL + "/fuel-level/" + reactor.id + "" + apiKeyLink)
+        const jsonFuelLevel = await rawFuelLevel.json()
+
+        // Get reactor state data
+        const rawReactorState = await fetch(BASE_URL + "/reactor-state/" + reactor.id + "" + apiKeyLink)
+        const jsonReactorState = await rawReactorState.json()
+
+        // Get rod state data
+        const rawRodState = await fetch(BASE_URL + "/rod-state/" + reactor.id + "" + apiKeyLink)
+        const jsonRodState = await rawRodState.json()
+
+
         return {
           ...reactor,
           tempAmount: jsonTemp.temperature.amount,
@@ -82,6 +100,11 @@ const App = () => {
           tempStatus: jsonTemp.temperature.status,
           outputAmount: jsonOutput.output.amount,
           outputUnit: jsonOutput.output.unit,
+          coolant: jsonCoolant.coolant,
+          fuel: jsonFuelLevel.fuel.percentage.toFixed(2),
+          reactorState: jsonReactorState.state,
+          rodStateIn: jsonRodState.control_rods.in,
+          rodStateOut: jsonRodState.control_rods.out,
         }
       })).then(reactors => setData({ "plant_name": jsonReactors.plant_name, "reactors": reactors }))
 
@@ -101,7 +124,7 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         {/* Get the plant naming function through as a prop */}
-        <Dashboard data={data} logs={logs} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink, endpoint:"/plant-name/" }} setData={setData} setLogs={setLogs} pollingRate={pollingRate}/>
+        <Dashboard data={data} logs={logs} url={{ BASE_URL: BASE_URL, apiKeyLink: apiKeyLink, endpoint: "/plant-name/" }} setData={setData} setLogs={setLogs} pollingRate={pollingRate} />
 
       </ThemeProvider>
 
