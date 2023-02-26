@@ -55,7 +55,8 @@ const Title = (props) => {
                         onBlur={(event) => { sendData(event) }}
                         onKeyDown={(event) => { event.key === "Enter" ? sendData(event) : null }} />
                     :
-                    <div style={{position: "relative", width: "100%", alignItems: "center"}}>
+                    // <div id="titleReadOnlyParent" style={{position: "relative", width: "100%", alignItems: "center"}}>
+                    <div id="titleReadOnlyParent">
                         <Typography className="titleReadOnly"> {hasBeenUpdated ? `${currName}` : `${name}`}</Typography>
                         <EditIcon id="editTitle" onClick={() => { setIsEditing(true) }} />
                     </div>
