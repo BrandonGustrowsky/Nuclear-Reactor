@@ -59,12 +59,11 @@ div>.titleContainer> div>.titleReadOnly {
     align-items: center;
 }
 
-div>.titleContainer>.titleInput {
-    display: flex;
-    background: var(--white);
+.titleContainer>.titleInput {
+    background: var(--off-white);
     height: 60px;
-    margin-top: 15px;
-    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 20px;
 }
 
 .panel {

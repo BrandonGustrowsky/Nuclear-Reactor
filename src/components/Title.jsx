@@ -50,7 +50,6 @@ const Title = (props) => {
             <div className="titleContainer">
                 {isEditing ?
                     <TextField autoFocus className="titleInput" variant="filled" value={(isEditing ? (currName ? currName : name) : name)}
-                        // onChange={(event) => { setData((prevData) => ({...prevData, "plant_name" : event.target.value})) }} onBlur={() => { setIsEditing(false) }}
                         onChange={(event) => { setCurrName(event.target.value) }}
                         onBlur={(event) => { sendData(event) }}
                         onKeyDown={(event) => { event.key === "Enter" ? sendData(event) : null }} />
