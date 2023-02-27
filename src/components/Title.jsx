@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 
 
 const Title = (props) => {
-    const { url, name, setData } = props
+    const { url, name, setData, customId } = props
 
     const [currName, setCurrName] = useState(name)
     const [isEditing, setIsEditing] = useState(false)
@@ -46,7 +46,7 @@ const Title = (props) => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} id="titleParent">
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} id={ customId ? customId : "titleParent"}>
             <div className="titleContainer">
                 {isEditing ?
                     <TextField autoFocus className="titleInput" variant="filled" value={(isEditing ? (currName ? currName : name) : name)}
@@ -54,7 +54,6 @@ const Title = (props) => {
                         onBlur={(event) => { sendData(event) }}
                         onKeyDown={(event) => { event.key === "Enter" ? sendData(event) : null }} />
                     :
-                    // <div id="titleReadOnlyParent" style={{position: "relative", width: "100%", alignItems: "center"}}>
                     <div id="titleReadOnlyParent">
                         <Typography className="titleReadOnly"> {hasBeenUpdated ? `${currName}` : `${name}`}</Typography>
                         <EditIcon id="editTitle" onClick={() => { setIsEditing(true) }} />

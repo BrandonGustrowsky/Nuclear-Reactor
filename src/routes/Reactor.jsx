@@ -6,6 +6,11 @@ import { Typography, Button, Paper } from "@mui/material"
 import CloseIcon from '@mui/icons-material/Close';
 import { useSnackbar } from 'notistack';
 import Graph from "../components/Graph"
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import PublishedWithChangesSharpIcon from '@mui/icons-material/PublishedWithChangesSharp';
+import PlayCircleOutlineSharpIcon from '@mui/icons-material/PlayCircleOutlineSharp';
 const Reactor = () => {
     const pollingRate = 150
     const [data, setData] = useState({})
@@ -214,10 +219,10 @@ const Reactor = () => {
             //call submit function here
             handleSubmit(event);
             console.log('Enter KEY was pressed')
-            }
         }
-    
-    
+    }
+
+
     useEffect(() => {
         const id = setInterval(buildReactor, pollingRate) //On mount
         return () => { clearInterval(id) }  //On component dismount
@@ -227,38 +232,38 @@ const Reactor = () => {
     const [last, setLast] = useState('');
 
     const handleSubmit = (event) => {
-        
+
         console.log('form submitted');
 
         if (!parseInt(event.target.value)) {
             enqueueSnackbar("Input must be an integer")
         }
-        for (let i = 0; i < parseInt(event.target.value); ++i){
+        for (let i = 0; i < parseInt(event.target.value); ++i) {
             console.log("In for loop")
-            if (event.target.name == "removeRod"){
+            if (event.target.name == "removeRod") {
                 activateRaiseRod();
             }
-            if (event.target.name == "dropRod"){
+            if (event.target.name == "dropRod") {
                 activateDropRod();
             }
-            }
-        event.target.value = ''
         }
+        event.target.value = ''
+    }
     useEffect(() => {
         const keyDownHandler = event => {
-        console.log('User pressed: ', event.key);
-        
-    };
-    document.addEventListener('keydown', keyDownHandler);
-    return () => {
-      document.removeEventListener('keydown', keyDownHandler);
-    };
-  }, []);
+            console.log('User pressed: ', event.key);
+
+        };
+        document.addEventListener('keydown', keyDownHandler);
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        };
+    }, []);
 
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <header style={{ display: "flex", alignItems: "center", }}>
-                <Title url={url} name={data.reactorName} setData={setData} />
+                <Title url={url} name={data.reactorName} setData={setData} customId="reactorTitle" />
                 <Button variant="text" style={{ position: "absolute", right: "0", top: "25px" }} onClick={() => {
                     navigate("/")
                 }}><CloseIcon id="closeBtn" /></Button>
@@ -266,7 +271,7 @@ const Reactor = () => {
             <Paper elevation={5} id="reactorMainContent">
                 <Typography variant="h1" style={{ fontSize: "25px" }}>Reactor State: <span style={{ fontWeight: "600" }}>{data.reactorState}</span></Typography>
                 <Typography variant="h2" style={{ fontSize: "25px" }}>Coolant: <span style={{ fontWeight: "bold" }}>{data.coolant}</span></Typography>
-                <Typography variant="h2" sx={{fontSize: "25px"}}>Fuel Level: <span style={{ fontWeight: "bold" }}>{data.fuel}%</span></Typography>
+                <Typography variant="h2" sx={{ fontSize: "25px" }}>Fuel Level: <span style={{ fontWeight: "bold" }}>{data.fuel}%</span></Typography>
                 <section>
                     <div className="rodStateContainer">
                         <Typography sx={{ lineHeight: "35px" }}>Rod State: In: <span style={{ fontWeight: "bold" }}>{data.rodStateIn}</span></Typography>
@@ -285,27 +290,25 @@ const Reactor = () => {
                 <Typography>Output: <span style={{ fontWeight: "bold" }}>{data.outputAmount} {data.outputUnit}</span> </Typography>
                 <section id="reactorActionsContainer">
                     <div className="reactorActions">
-                        <Button className="reactorShutdownBtn" onClick={activateEmergencyShutdown}></Button>
+                        <Button className="" onClick={activateEmergencyShutdown}> <NewReleasesIcon id="emergencyShutdownBtn" /> </Button>
                         <Typography>Emergency Shutdown</Typography>
                     </div>
                     <div className="reactorActions">
-                        <Button className="reactorShutdownBtn" onClick={activateControlledShutdown}></Button>
+                        <Button onClick={activateControlledShutdown}> <PowerSettingsNewIcon id="controlledShutdownBtn"/> </Button>
                         <Typography>Controlled Shutdown</Typography>
                     </div>
                     <div className="reactorActions">
-                        <Button className="reactorShutdownBtn" onClick={activateRefuel}></Button>
-                        <Typography sx={{marginLeft: "10px"}}>Refuel Reactor</Typography>
+                        <Button onClick={activateRefuel}> <LocalGasStationIcon id="refuelBtn" /> </Button>
+                        <Typography sx={{ marginLeft: "10px" }}>Refuel Reactor</Typography>
                     </div>
                     <div className="reactorActions">
-                        <Button className="reactorShutdownBtn" onClick={activateToggleCoolant}></Button>
-                        <Typography sx={{marginLeft: "10px"}}>Toggle Coolant</Typography>
+                        <Button className="reactorShutdownBtn" onClick={activateToggleCoolant}> <PublishedWithChangesSharpIcon id="toggleCoolantBtn" /> </Button>
+                        <Typography sx={{ marginLeft: "10px" }}>Toggle Coolant</Typography>
                     </div>
                     <div className="reactorActions">
-                        <Button className="reactorShutdownBtn" onClick={activateStartReactor}></Button>
-                        <Typography sx={{marginLeft: "10px"}}>Start Reactor</Typography>
+                        <Button className="reactorShutdownBtn" onClick={activateStartReactor}> <PlayCircleOutlineSharpIcon id="startReactorBtn" /> </Button>
+                        <Typography sx={{ marginLeft: "10px" }}>Start Reactor</Typography>
                     </div>
-                </section>
-                <section>
                 </section>
             </Paper>
         </div>

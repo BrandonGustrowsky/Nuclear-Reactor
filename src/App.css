@@ -272,26 +272,59 @@ div>.titleContainer> div>.titleReadOnly {
     width: 90%;
 }
 
-.reactorActions>.reactorShutdownBtn:hover {
-    background: radial-gradient(ellipse at center, var(--light-blue), transparent),
-        radial-gradient(ellipse at bottom, var(--orange), transparent);
-    outline: 1px solid var(--dark-blue);
+#emergencyShutdownBtn {
+    color: #D0342C;
+    transition: 0.6s ease-out;
+    font-size: 77px;
 }
 
-.reactorActions:nth-child(2) {
-    text-overflow: ellipsis;
-    margin-left: 20px;
+#emergencyShutdownBtn:hover {
+    color: #91241E;
 }
 
-.reactorActions>.reactorShutdownBtn {
-    background: radial-gradient(ellipse at center, var(--orange), transparent),
-        radial-gradient(ellipse at bottom, var(--dark-blue), transparent);
-    outline: 1px solid var(--dark-blue);
-    border-radius: 100%;
-    height: 70px;
-    width: 75px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 50px 15px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    transition: ease-in 0.6s;
+#controlledShutdownBtn {
+    color: #4169e1;
+    font-size: 77px;
+    margin-left: 10px;
+    transition: 0.6s ease-out;
+}
+
+#controlledShutdownBtn:hover {
+    color: #2D499D;
+}
+
+#refuelBtn {
+    font-size: 77px;
+    margin-left: 10px;
+    transition: 0.6s ease-out;
+    color: #444444;
+}
+
+#refuelBtn:hover {
+    color: #222222;
+}
+
+#toggleCoolantBtn {
+    font-size: 77px;
+    margin-left: 10px;
+    transition: 0.6s ease-out;
+    color: #D1BF01;
+}
+
+#toggleCoolantBtn:hover {
+    color: #BAAA01;
+}
+
+#startReactorBtn {
+    font-size: 77px;
+    margin-left: 10px;
+    transition: 0.6s ease-out;
+    color: #4BB543;
+    margin-right: 10px;
+}
+
+#startReactorBtn:hover {
+    color: #3C9035;
 }
 
 .rodStateContainer {
@@ -333,6 +366,10 @@ div>.titleContainer> div>.titleReadOnly {
     #titleParent {
         margin-top: 2%;
     }
+
+    #reactorTitle {
+        margin-top: 3%;
+    }
 }
 
 @media screen and (max-width: 1078px) {
@@ -342,6 +379,10 @@ div>.titleContainer> div>.titleReadOnly {
 
     #titleParent {
         margin-top: 2%;
+    }
+
+    #reactorTitle {
+        margin-top: 8%;
     }
 }
 
@@ -356,17 +397,29 @@ div>.titleContainer> div>.titleReadOnly {
     #titleParent {
         margin-top: 3%;
     }
+
+    #reactorTitle {
+        margin-top: 15%;
+    }
 }
 
 @media screen and (max-width: 850px) {
     #titleParent {
         margin-top: 3%;
     }
+
+    #reactorTitle {
+        margin-top: 20%;
+    }
 }
 
 @media screen and (max-width: 775px) {
     #titleParent {
         margin-top: 5%;
+    }
+
+    #reactorTitle {
+        margin-top: 25%;
     }
 }
 
@@ -410,10 +463,12 @@ div>.titleContainer> div>.titleReadOnly {
 
     #reactorActionsContainer {
         display: grid;
-        grid-template-columns: repeat(2, 0.2fr);
-        gap: 90px;
-        justify-content: center;
-        align-items: center;
+        grid-template-columns: repeat(2, 0.4fr);
+        gap: 20px;
+        /* grid-gap: 40px; */
+        /* justify-content: center; */
+        /* align-items: center; */
+        align-self: center;
     }
 
     #reactorMainContent {
@@ -434,5 +489,9 @@ div>.titleContainer> div>.titleReadOnly {
 @media screen and (max-width: 450px) {
     #titleParent {
         margin-top: 24%;
+    }
+
+    #reactorTitle {
+        margin-top: 30%;
     }
 }
