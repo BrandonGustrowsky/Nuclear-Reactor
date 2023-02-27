@@ -255,36 +255,34 @@ const Reactor = () => {
     };
   }, []);
 
-
-
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <header>
+            <header style={{ display: "flex", alignItems: "center", }}>
                 <Title url={url} name={data.reactorName} setData={setData} />
                 <Button variant="text" style={{ position: "absolute", right: "0", top: "25px" }} onClick={() => {
                     navigate("/")
                 }}><CloseIcon id="closeBtn" /></Button>
             </header>
-            <main id="reactorMainContent">
+            <Paper elevation={5} id="reactorMainContent">
                 <Typography variant="h1" style={{ fontSize: "25px" }}>Reactor State: <span style={{ fontWeight: "600" }}>{data.reactorState}</span></Typography>
-                <Typography variant="h2" style={{ fontSize: "25px" }}>Coolant: {data.coolant}</Typography>
-                <Typography variant="h2" sx={{fontSize: "25px"}}>Fuel Level: {data.fuel}%</Typography>
+                <Typography variant="h2" style={{ fontSize: "25px" }}>Coolant: <span style={{ fontWeight: "bold" }}>{data.coolant}</span></Typography>
+                <Typography variant="h2" sx={{fontSize: "25px"}}>Fuel Level: <span style={{ fontWeight: "bold" }}>{data.fuel}%</span></Typography>
                 <section>
                     <div className="rodStateContainer">
-                        <Typography>Rod State: In: {data.rodStateIn}</Typography>
-                        <input type="text" id="first" className="rodInputAmount" name="dropRod" onChange={event => setFirst(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
+                        <Typography sx={{ lineHeight: "35px" }}>Rod State: In: <span style={{ fontWeight: "bold" }}>{data.rodStateIn}</span></Typography>
+                        <input type="text" id="first" className="rodInputAmount" name="dropRod" onChange={event => setFirst(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)} placeholder=" Add # rods..." />
                     </div>
                     <div className="rodStateContainer">
-                        <Typography>Rod State: Out: {data.rodStateOut}</Typography>
-                        <input type="text" id="last" name="removeRod" className="rodInputAmount" onChange={event => setLast(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)}/>
+                        <Typography sx={{ lineHeight: "35px" }}>Rod State: Out: <span style={{ fontWeight: "bold" }}>{data.rodStateOut}</span></Typography>
+                        <input type="text" id="last" name="removeRod" className="rodInputAmount" onChange={event => setLast(event.target.value)} autoComplete="off" onKeyDown={event => onEnterDown(event)} placeholder=" Remove # rods..." />
                     </div>
                 </section>
+                <Typography variant="h3" style={{ fontSize: "25px", textAlign: "center" }}>Current Temperature: <span style={{ fontWeight: "bold" }}>{Number(data.tempAmount)} ˚{data.tempUnit === "celsius" ? "C" : "F"}</span></Typography>
                 <div id="graphContainer">
-                    <Typography variant="h3" style={{ fontSize: "25px", textAlign: "center" }}>Current Temperature: {Number(data.tempAmount)} ˚{data.tempUnit === "celsius" ? "C" : "F"}</Typography>
-                    <Graph data={data} width="200px" height="250px" temperature={data.tempAmount} pollingRate={pollingRate} />
+                    <Graph data={data} temperature={data.tempAmount} pollingRate={pollingRate} />
                 </div>
-                <Typography>Level: {data.tempStatus}</Typography>
-                <Typography>Output: {data.outputAmount} {data.outputUnit} </Typography>
+                <Typography>Level: <span style={{ fontWeight: "bold" }}>{data.tempStatus}</span></Typography>
+                <Typography>Output: <span style={{ fontWeight: "bold" }}>{data.outputAmount} {data.outputUnit}</span> </Typography>
                 <section id="reactorActionsContainer">
                     <div className="reactorActions">
                         <Button className="reactorShutdownBtn" onClick={activateEmergencyShutdown}></Button>
@@ -309,7 +307,7 @@ const Reactor = () => {
                 </section>
                 <section>
                 </section>
-            </main>
+            </Paper>
         </div>
     )
 }

@@ -111,20 +111,14 @@ div>.titleContainer> div>.titleReadOnly {
     display: none;
 }
 
-.panel>*:nth-child(3) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .controlBoard {
-    background: var(--neon);
     height: max-content;
+    width: 80%;
     padding: 80px 10px 10px 10px;
-    margin-top: -5vh;
+    margin-top: -8vh;
     display: grid;
-    grid-template-columns: repeat(2, 0.2fr);
-    gap: 50px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     justify-content: center;
     align-items: center;
 }
@@ -160,9 +154,9 @@ div>.titleContainer> div>.titleReadOnly {
 
 .toggleButtons {
     display: flex;
-    justify-content: space-between;
+    width: 90%;
+    justify-content: space-evenly;
     position: relative;
-    bottom: 70px;
 }
 
 .toggleButtons>.toggleSwitch {
@@ -174,6 +168,17 @@ div>.titleContainer> div>.titleReadOnly {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#graphContainer {
+    width: 70%;
+    height: 375px;
+    align-self: center;
+}
+
+#graphContainer2 {
+    width: 90%;
+    height: 300px;
 }
 
 .reactorTileContainer>.reactorTileChild {
@@ -197,27 +202,43 @@ div>.titleContainer> div>.titleReadOnly {
     border: 1px solid var(--orange);
 }
 
+#logsParent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(var(--mid-white), var(--off-white));
+    width: 48%;
+    height: 400px;
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid var(--dark-blue);
+    position: relative;
+    /* bottom: 00px; */
+    margin-top: 10px;
+}
+
 #logsContainer {
     background: var(--white);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     border: 2px solid var(--orange);
-    border-radius: 5%;
+    /* border-radius: 5%; */
     width: 80%;
     padding: 20px;
     height: max-content;
     min-height: 70%;
     overflow: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    /* scrollbar-width: none; */
+    /* -ms-overflow-style: none; */
 }
 
-#logsContainer::-webkit-scrollbar {
+/* #logsContainer::-webkit-scrollbar {
     display: none;
-}
+} */
 
 
 #closeBtn {
-    color: var(--white);
+    color: var(--dark-blue);
     font-size: 40px;
     text-shadow: #BFD7EA;
     line-height: 1px;
@@ -227,10 +248,11 @@ div>.titleContainer> div>.titleReadOnly {
 }
 
 #reactorMainContent {
-    background: var(--off-blue);
+    background: linear-gradient(var(--off-white), var(--mid-white));
     width: 70%;
     height: max-content;
-    border-radius: 4%;
+    border-radius: 15px;
+    border: 1px solid var(--dark-blue);
     display: flex;
     flex-direction: column;
     padding: 6%;
@@ -251,7 +273,7 @@ div>.titleContainer> div>.titleReadOnly {
 }
 
 .reactorActions>.reactorShutdownBtn:hover {
-    background: radial-gradient(ellipse at top, var(--light-blue), transparent),
+    background: radial-gradient(ellipse at center, var(--light-blue), transparent),
         radial-gradient(ellipse at bottom, var(--orange), transparent);
     outline: 1px solid var(--dark-blue);
 }
@@ -262,9 +284,9 @@ div>.titleContainer> div>.titleReadOnly {
 }
 
 .reactorActions>.reactorShutdownBtn {
-    background: radial-gradient(ellipse at top, var(--orange), transparent),
+    background: radial-gradient(ellipse at center, var(--orange), transparent),
         radial-gradient(ellipse at bottom, var(--dark-blue), transparent);
-    outline: 1px solid var(--white);
+    outline: 1px solid var(--dark-blue);
     border-radius: 100%;
     height: 70px;
     width: 75px;
@@ -288,6 +310,10 @@ div>.titleContainer> div>.titleReadOnly {
     margin-top: -5px;
 }
 
+#last {
+    width: 105px;
+}
+
 .rodStateContainer>.changeRodsBtn:hover {
     background: var(--dark-blue);
     outline: 2px solid var(--orange);
@@ -296,21 +322,61 @@ div>.titleContainer> div>.titleReadOnly {
 
 .rodStateContainer > .rodInputAmount {
     background: var(--white);
-    width: 55px;
-    height: 25px;
+    width: 95px;
+    height: 35px;
     border: 1px solid var(--orange);
+    border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-@media screen and (max-width: 1050px) {
-    .panel>*:nth-child(2)>* {
-        flex-direction: column;
-        flex-wrap: nowrap;
-        align-items: center;
+@media screen and (max-width: 1200px) {
+    #titleParent {
+        margin-top: 2%;
+    }
+}
+
+@media screen and (max-width: 1078px) {
+    #logsParent {
+        bottom: 100px;
     }
 
-    .panel>*:nth-child(2)>* {
+    #titleParent {
+        margin-top: 2%;
+    }
+}
+
+@media screen and (max-width: 1085px) {
+    #logsParent {
+        bottom: 0;
         width: 90%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #titleParent {
+        margin-top: 3%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    #titleParent {
+        margin-top: 3%;
+    }
+}
+
+@media screen and (max-width: 775px) {
+    #titleParent {
+        margin-top: 5%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    /* #logsParent {
+        bottom: 450px;
+    } */
+
+    #titleParent {
+        margin-top: 8%;
     }
 }
 
@@ -321,6 +387,11 @@ div>.titleContainer> div>.titleReadOnly {
     }
 
     .panel > * {
+        width: 100%;
+    }
+
+    .panel > *:nth-child(2) {
+        margin-top: 10px;
         width: 100%;
     }
 
@@ -347,5 +418,21 @@ div>.titleContainer> div>.titleReadOnly {
 
     #reactorMainContent {
         width: 100%;
+    }
+
+    #logsParent {
+        bottom: 0;
+        width: 99%;
+        margin-left: -10px;
+    }
+
+    #titleParent {
+        margin-top: 15%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    #titleParent {
+        margin-top: 24%;
     }
 }

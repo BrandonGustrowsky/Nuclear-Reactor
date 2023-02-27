@@ -21,7 +21,7 @@ const Dashboard = (props) => {
 
     const activateControlledShutdown = () => {
         data.reactors.map(async (reactor) => {
-            const response = await fetch(url.BASE_URL + "/controlled-shutdown/" + reactor.id + "" + url.apiKeyLink,  {
+            const response = await fetch(url.BASE_URL + "/controlled-shutdown/" + reactor.id + "" + url.apiKeyLink, {
                 method: "POST",
             })
             if (response.status === 201) {
@@ -58,7 +58,7 @@ const Dashboard = (props) => {
             const response = await fetch(url.BASE_URL + "/coolant/" + reactor.id + "" + url.apiKeyLink, {
                 method: "POST",
                 headers: {
-                    "Accept" : "application/json",
+                    "Accept": "application/json",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
@@ -72,7 +72,7 @@ const Dashboard = (props) => {
                 enqueueSnackbar(text)
             }
         })
-        
+
     }
 
     const activateReset = async () => {
@@ -104,7 +104,7 @@ const Dashboard = (props) => {
             temperatureUnit = reactor.tempUnit
             return accumulator
         }, 0)
-        return (temperature/data.reactors.length).toFixed(2)
+        return (temperature / data.reactors.length).toFixed(2)
     }
 
     const outputUnit = "Gigawatts (GW)"
@@ -113,7 +113,7 @@ const Dashboard = (props) => {
             accumulator += reactor.outputAmount
             return accumulator
         }, 0)
-        return (totalMegawattOutput/1000).toFixed(2) // Convert to Gigawatts (project specification)
+        return (totalMegawattOutput / 1000).toFixed(2) // Convert to Gigawatts (project specification)
     }
 
     let msgs = []
@@ -134,14 +134,34 @@ const Dashboard = (props) => {
                 <Paper elevation={5}>
                     <div>
                         <Typography style={{ fontSize: "35px" }}>Average Temperature</Typography>
-                        <Graph data={data.reactors} width="550px" height="145px" temperature={calculateAverageTemperature()} pollingRate={pollingRate}/>
-                        <Typography style={{fontSize: "20px"}}>Current Avg. Temp: {calculateAverageTemperature()} {temperatureUnit}</Typography>
-                        <Typography style={{fontSize: "20px"}}>{calculateTotalOutput()} {outputUnit} output</Typography>
+                        <div id="graphContainer2">
+                            <Graph data={data.reactors} width="80%" height="145px" temperature={calculateAverageTemperature()} pollingRate={pollingRate} />
+                        </div>
+                        <Typography style={{ fontSize: "20px" }}>{calculateTotalOutput()} {outputUnit} output</Typography>
+                        <section className="controlBoard">
+                            <Button className="controlBoardBtnOrange" onClick={activateEmergencyShutdown}>Emergency Shutdown</Button>
+                            <Button className="controlBoardBtnBlue" onClick={activateControlledShutdown}>Controlled Shutdown</Button>
+                            <Button className="controlBoardBtnBlue" onClick={() => { toggleCoolantActivation("on") }}>Enable Coolant</Button>
+                            <Button className="controlBoardBtnBlue" onClick={() => { toggleCoolantActivation("off") }}>Disable Coolant</Button>
+                            <Button className="controlBoardBtnOrange" onClick={activateReset}>RESET</Button>
+                        </section>
+                        <div className="toggleButtons">
+                            <Switch className="toggleSwitch" onClick={() => {
+                                setLeftToggle((prevLeftToggle) => {
+                                    return !prevLeftToggle
+                                })
+                            }} />
+                            <Switch className="toggleSwitch" onClick={() => {
+                                setRightToggle((prevRightToggle) => {
+                                    return !prevRightToggle
+                                })
+                            }} />
+                        </div>
                     </div>
                 </Paper>
                 <Paper elevation={5}>
-                <Typography variant="p" sx={{fontSize: "30px", textAlign: "center"}}>Reactors</Typography>
-                <hr style={{borderWidth: "1px", width: "90%", color: "#FF6663", background: "#FF6663",}} />
+                    <Typography variant="p" sx={{ fontSize: "30px", textAlign: "center" }}>Reactors</Typography>
+                    <hr style={{ borderWidth: "1px", width: "90%", color: "#FF6663", background: "#FF6663", }} />
                     {data.reactors && data.reactors.map((reactor, index) => {
                         return (
                             <ReactorTile key={index} reactor={reactor} url={url} />
@@ -149,36 +169,16 @@ const Dashboard = (props) => {
                     })}
                 </Paper>
             </section>
-            <Paper elevation={5}>
-                    <Typography style={{ fontSize: "25px" }}>System Logs</Typography>
-                    <Paper id="logsContainer">
+            <Paper elevation={5} id="logsParent">
+                <Typography style={{ fontSize: "25px" }}>System Logs</Typography>
+                <Paper id="logsContainer">
                     {msgs.map((msg, index) => {
-                        return <p key={index} style={{lineHeight: "20px"}}>{msg}</p>
+                        return <p key={index} style={{ lineHeight: "20px" }}>{msg}</p>
                     })}
-                    </Paper>
                 </Paper>
-            <section className="controlBoard">
-                <Button className="controlBoardBtnOrange" onClick={activateEmergencyShutdown}>Emergency Shutdown</Button>
-                <Button className="controlBoardBtnBlue" onClick={activateControlledShutdown}>Controlled Shutdown</Button>
-                <Button className="controlBoardBtnBlue" onClick={() => {toggleCoolantActivation("on")}}>Enable Coolant</Button>
-                <Button className="controlBoardBtnBlue" onClick={() => {toggleCoolantActivation("off")}}>Disable Coolant</Button>
-                <Button className="controlBoardBtnOrange" onClick={activateReset}>RESET</Button>
-            </section>
-            <div className="toggleButtons">
-                <Switch className="toggleSwitch" onClick={() => {
-                    setLeftToggle((prevLeftToggle) => {
-                        return !prevLeftToggle
-                    })
-                }}/>
-                <Switch className="toggleSwitch" onClick={() => {
-                    setRightToggle((prevRightToggle) => {
-                        return !prevRightToggle
-                    })
-                }}/>
-            </div>
+            </Paper>
         </>
     )
-
 }
 
 export default Dashboard

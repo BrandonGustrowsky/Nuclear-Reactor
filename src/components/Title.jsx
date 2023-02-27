@@ -46,7 +46,7 @@ const Title = (props) => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }} id="titleParent">
             <div className="titleContainer">
                 {isEditing ?
                     <TextField autoFocus className="titleInput" variant="filled" value={(isEditing ? (currName ? currName : name) : name)}

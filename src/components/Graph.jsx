@@ -3,7 +3,7 @@ import { Chart } from "chart.js/auto"
 
 const Graph = (props) => {
 
-  const { data, width, height, temperature, pollingRate } = props
+  const { data, temperature, pollingRate } = props
   const canvasRef = useRef(null)
   const [temperatures, setTemperatures] = useState([])
 
@@ -29,6 +29,7 @@ useEffect(() => {
   },
   options:{ 
     animations: false,
+    maintainAspectRatio: false,
     scales: {
       y: {
         beginAtZero: true
@@ -43,7 +44,7 @@ useEffect(() => {
 
 return (
   <>
-   <canvas ref={canvasRef} style={{width, height}}>
+   <canvas ref={canvasRef}>
   </canvas>
   <script src="chart.js"></script>
   </>
